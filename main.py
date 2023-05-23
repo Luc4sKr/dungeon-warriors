@@ -25,9 +25,12 @@ class Game:
         self.all_sprites = pygame.sprite.Group()
 
         player_img = Image("assets\sprites\warrior\idle\sprite-1.png", 3)
-        player_idle_spritesheet = Spritesheet("assets\sprites\warrior\idle", 180, 3)
+        player_idle_spritesheet = Spritesheet("assets\sprites\warrior\idle", 240, 3)
+        player_run_spritesheet = Spritesheet("assets\sprites\warrior\\run", 100, 3)
+
         player_anim = Animation()
         player_anim.add(1, player_idle_spritesheet)
+        player_anim.add(2, player_run_spritesheet)
 
         self.player = Player(player_img, player_anim, 100, 100, 100)
 

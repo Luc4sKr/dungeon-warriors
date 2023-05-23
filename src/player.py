@@ -20,7 +20,7 @@ class Player(Object):
         self.frame_index = 0
         self.update_time = pygame.time.get_ticks()
 
-        self.animation.select(1)
+        self.animation.select(2)
 
     def update(self):
         self.image = self.animation.update_animation()
