@@ -1,7 +1,7 @@
 import pygame
 
 class Image:
-    def __init__(self, image_path, width=16, height=16) -> None:
+    def __init__(self, image_path, width=16, height=28) -> None:
         self.__image = pygame.image.load(image_path).convert_alpha()
         self.__width = width
         self.__height = height

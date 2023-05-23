@@ -18,6 +18,13 @@ class Object(pygame.sprite.Sprite):
         self.__pos_x += dx
         self.__pos_y += dy
 
+    def scale(self, factor):
+        self.__scale *= factor
+
+    def scaleTo(self, value):
+        self.__scale = value
+
+
     @property
     def pos_x(self):
         return self.__pos_x

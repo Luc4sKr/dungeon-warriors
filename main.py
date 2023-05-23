@@ -22,8 +22,10 @@ class Game:
     def new_game(self):
         self.all_sprites = pygame.sprite.Group()
 
-        player_img = Image("assets\sprites\warrior\knight_f_hit_anim_f0.png")
+        player_img = Image("assets\sprites\warrior\idle\sprite-1.png")
         self.player = Player(player_img, 100, 100, 100)
+
+        
 
         self.all_sprites.add(self.player)
 
@@ -45,6 +47,8 @@ class Game:
 
     def run(self):
         while not self.game_over:
+            self.clock.tick(FPS)
+            
             self.check_events()
             self.update()
             self.draw()

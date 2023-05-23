@@ -4,6 +4,11 @@ HALF_HEIGHT = HEIGHT // 2
 
 FPS = 60
 
+# PATH's
+SPRITES_PATH = "assets\\sprites"
+TILESETS_PATH = "assets\\sprites"
+
+WARRIOR_IDLE_PATH = f"{SPRITES_PATH}\\warrior\\idle"
 
 # COLORS
 BLACK = (0, 0, 0)
