@@ -1,19 +1,31 @@
 import pygame
 
 class Image:
-    def __init__(self, image_path, width=16, height=28) -> None:
+    def __init__(self, image_path, scale=1, rotation=0) -> None:
+        self.__scale = scale
+        self.__rotation =  rotation
+
         self.__image = pygame.image.load(image_path).convert_alpha()
-        self.__width = width
-        self.__height = height
+        self.__image = pygame.transform.scale(self.__image, (self.__image.get_width() * scale, self.__image.get_height() * scale))
+
+    def move_to(self, dx, dy):
+        self.__pos_x = dx
+        self.__pos_y = dy
+
+    def translate(self, dx, dy):
+        self.__pos_x += dx
+        self.__pos_y += dy
+
+    def scale(self, factor):
+        self.__scale *= factor
+
+    def scaleTo(self, value):
+        self.__scale = value
+        
 
     @property
     def image(self):
         return self.__image
     
-    @property
-    def width(self):
-        return self.__width
     
-    @property
-    def height(self):
-        return self.__height
+

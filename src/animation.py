@@ -1,20 +1,30 @@
 import pygame
 from os import listdir
 
+DELAY = "delay"
+ANIMATION = "animation"
+
 class Animation:
-    def __init__(self, spritesheet_path: list, delay, repeat=True):
-        self.spritesheet_path = spritesheet_path
-        self.delay = delay
+    def __init__(self, repeat=True):
         self.repeat = repeat
 
-        self.animation = self.create_animation()
+        self.anims = {}
+        self.sequence = []
 
-    def create_animation(self):
-        animation_list = []
-        num_of_frames = len(listdir(self.spritesheet_path))
+        self.update_time = pygame.time.get_ticks()
+        self.frame_index = 0
 
-        for i in range(1, num_of_frames):
-            image = pygame.image.load(f"{self.spritesheet_path}\\sprite-{i}.png").convert_alpha()
-            animation_list.append(image)
+    def add(self, id, spritesheet):
+        self.anims[id] = {ANIMATION: spritesheet.sprite_list, DELAY: spritesheet.delay}
 
-        return animation_list
+    def select(self, id):
+        self.sequence = self.anims[id]
+
+    def update_animation(self):
+        if pygame.time.get_ticks() - self.update_time > self.sequence[DELAY]:
+            self.update_time = pygame.time.get_ticks()
+            self.frame_index += 1
+        if self.frame_index >= len(self.sequence[ANIMATION]):
+            self.frame_index = 0
+
+        return self.sequence[ANIMATION][self.frame_index].image

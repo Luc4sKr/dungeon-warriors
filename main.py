@@ -4,6 +4,8 @@ import sys
 from src.config import *
 from src.player import Player
 from src.image import Image
+from src.spritesheet import Spritesheet
+from src.animation import Animation
 
 class Game:
     def __init__(self):
@@ -22,10 +24,12 @@ class Game:
     def new_game(self):
         self.all_sprites = pygame.sprite.Group()
 
-        player_img = Image("assets\sprites\warrior\idle\sprite-1.png")
-        self.player = Player(player_img, 100, 100, 100)
+        player_img = Image("assets\sprites\warrior\idle\sprite-1.png", 3)
+        player_idle_spritesheet = Spritesheet("assets\sprites\warrior\idle", 180, 3)
+        player_anim = Animation()
+        player_anim.add(1, player_idle_spritesheet)
 
-        
+        self.player = Player(player_img, player_anim, 100, 100, 100)
 
         self.all_sprites.add(self.player)
 

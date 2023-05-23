@@ -1,29 +1,12 @@
 import pygame
 
 class Object(pygame.sprite.Sprite):
-    def __init__(self, pos_x, pos_y, health, scale=1, rotation=0):
+    def __init__(self, pos_x, pos_y, health):
         pygame.sprite.Sprite.__init__(self)
 
         self.__pos_x = pos_x
         self.__pos_y = pos_y
         self.__health = health
-        self.__scale = scale
-        self.__rotation = rotation
-
-    def move_to(self, dx, dy):
-        self.__pos_x = dx
-        self.__pos_y = dy
-
-    def translate(self, dx, dy):
-        self.__pos_x += dx
-        self.__pos_y += dy
-
-    def scale(self, factor):
-        self.__scale *= factor
-
-    def scaleTo(self, value):
-        self.__scale = value
-
 
     @property
     def pos_x(self):
