@@ -17,6 +17,7 @@ class Player(Object):
 
         self.speed = 5
         self.is_running = False
+        self.invert_sprite = False
 
         self.image = self.player_img.image
         self.rect = self.image.get_rect()
@@ -39,8 +40,10 @@ class Player(Object):
 
         if keys[pygame.K_d]:
             self.direction.x = 1
+            self.invert_sprite = False
         elif keys[pygame.K_a]:
             self.direction.x = -1
+            self.invert_sprite = True
         else:
             self.direction.x = 0
 
@@ -58,10 +61,11 @@ class Player(Object):
         if self.is_running:
             self.animation.select(PLAYER_RUN)
 
+        self.image = self.animation.update_animation()
+        self.image = pygame.transform.flip(self.image, self.invert_sprite, False)
+
         
     def update(self):
         self.input()
         self.move()
         self.animation_control()
-
-        self.image = self.animation.update_animation()

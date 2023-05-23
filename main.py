@@ -52,7 +52,7 @@ class Game:
     def run(self):
         while not self.game_over:
             self.clock.tick(FPS)
-            
+
             self.check_events()
             self.update()
             self.draw()
