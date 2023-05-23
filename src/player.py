@@ -8,8 +8,8 @@ from .animation import Animation
 from .spritesheet import Spritesheet
 
 class Player(Object):
-    def __init__(self, image: Image, animation: Animation, pos_x, pos_y, health) -> None:
-        super().__init__(pos_x, pos_y, health)
+    def __init__(self, image: Image, animation: Animation, pos_x, pos_y) -> None:
+        super().__init__(pos_x, pos_y)
     
         self.player_img = image
         self.animation = animation
@@ -65,5 +65,3 @@ class Player(Object):
         self.animation_control()
 
         self.image = self.animation.update_animation()
-
-        print(self.is_running)

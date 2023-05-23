@@ -1,12 +1,16 @@
+from .image import Image
+
 RESOLUTION = WIDTH, HEIGHT = 854, 480
 HALF_WIDTH = WIDTH // 2
 HALF_HEIGHT = HEIGHT // 2
 
 FPS = 60
+SCALE = 3
 
 # PATH's
 SPRITES_PATH = "assets\\sprites"
-TILESETS_PATH = "assets\\sprites"
+TILESETS_PATH = "assets\\tilesets"
+LEVELS_PATH = "assets\\levels"
 
 WARRIOR_IDLE_PATH = f"{SPRITES_PATH}\\warrior\\idle"
 
