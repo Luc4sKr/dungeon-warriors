@@ -7,12 +7,16 @@ from src.image import Image
 from src.spritesheet import Spritesheet
 from src.animation import Animation
 
+from src.object_handler import ObjectHandler
+
 class Game:
     def __init__(self):
         pygame.init()
         pygame.mixer.init()
 
         self.screen = pygame.display.set_mode(RESOLUTION)
+        pygame.display.set_caption("Dungeon Warriors")
+
         self.clock = pygame.time.Clock()
         self.game_over = False
         self.delta_time = 1
@@ -22,28 +26,16 @@ class Game:
         self.new_game()
 
     def new_game(self):
-        self.all_sprites = pygame.sprite.Group()
-
-        player_img = Image("assets\sprites\warrior\idle\sprite-1.png", 3)
-        player_idle_spritesheet = Spritesheet("assets\sprites\warrior\idle", 240, 3)
-        player_run_spritesheet = Spritesheet("assets\sprites\warrior\\run", 100, 3)
-
-        player_anim = Animation()
-        player_anim.add(1, player_idle_spritesheet)
-        player_anim.add(2, player_run_spritesheet)
-
-        self.player = Player(player_img, player_anim, 100, 100, 100)
-
-        self.all_sprites.add(self.player)
+        self.object_handler = ObjectHandler(self)
 
     def update(self):
-        self.all_sprites.update()
+        self.object_handler.update()
         pygame.display.flip()
+        self.delta_time = self.clock.tick(FPS)
 
     def draw(self):
-        # colocar o object_render aqui dps
         self.screen.fill(BLACK)
-        self.all_sprites.draw(self.screen)
+        self.object_handler.draw()
 
     def check_events(self):
         for event in pygame.event.get():
