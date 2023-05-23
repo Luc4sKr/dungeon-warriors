@@ -10,6 +10,11 @@ TILESETS_PATH = "assets\\sprites"
 
 WARRIOR_IDLE_PATH = f"{SPRITES_PATH}\\warrior\\idle"
 
+# PLAYER
+PLAYER_IDLE = 1
+PLAYER_RUN = 2
+PLAYER_HIT = 3
+
 # COLORS
 BLACK = (0, 0, 0)
 WHITE = (255, 255, 255)

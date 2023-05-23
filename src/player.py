@@ -1,4 +1,5 @@
 import pygame
+from math import sqrt, sin, cos
 
 from .config import *
 from .object import Object
@@ -20,7 +21,20 @@ class Player(Object):
         self.frame_index = 0
         self.update_time = pygame.time.get_ticks()
 
-        self.animation.select(2)
+        self.animation.select(PLAYER_IDLE)
 
+    def movement(self):
+        keys = pygame.key.get_pressed()
+
+        if keys[pygame.K_w]:
+            pass
+        if keys[pygame.K_s]:
+            pass
+        if keys[pygame.K_d]:
+            pass
+        if keys[pygame.K_a]:
+            pass
+        
     def update(self):
+        self.movement()
         self.image = self.animation.update_animation()
