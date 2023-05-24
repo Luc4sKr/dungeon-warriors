@@ -8,8 +8,8 @@ from .animation import Animation
 from .spritesheet import Spritesheet
 
 class Player(Object):
-    def __init__(self, image: Image, animation: Animation, pos_x, pos_y) -> None:
-        super().__init__(pos_x, pos_y)
+    def __init__(self, obj_handler, image: Image, animation: Animation, pos_x, pos_y) -> None:
+        super().__init__(obj_handler, pos_x, pos_y)
     
         self.player_img = image
         self.animation = animation
@@ -21,7 +21,7 @@ class Player(Object):
 
         self.image = self.player_img.image
         self.rect = self.image.get_rect()
-        self.rect.center = (HALF_WIDTH, HALF_HEIGHT)
+        self.rect.center = (pos_x, pos_y)
 
         self.frame_index = 0
         self.update_time = pygame.time.get_ticks()
@@ -64,7 +64,9 @@ class Player(Object):
         self.image = self.animation.update_animation()
         self.image = pygame.transform.flip(self.image, self.invert_sprite, False)
 
-        
+    def draw(self):
+        pass
+
     def update(self):
         self.input()
         self.move()

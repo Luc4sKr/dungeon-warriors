@@ -1,8 +1,8 @@
 import pygame
 
 class Object(pygame.sprite.Sprite):
-    def __init__(self, pos_x, pos_y):
-        pygame.sprite.Sprite.__init__(self)
+    def __init__(self, object_handler, pos_x, pos_y):
+        super().__init__(object_handler.sprite_list)
 
         self.__pos_x = pos_x
         self.__pos_y = pos_y

@@ -7,6 +7,7 @@ from src.image import Image
 from src.spritesheet import Spritesheet
 from src.animation import Animation
 from src.level import Level
+from src.camera import YSortCameraGroup
 
 from src.object_handler import ObjectHandler
 
@@ -27,6 +28,7 @@ class Game:
         self.new_game()
 
     def new_game(self):
+        self.camera = YSortCameraGroup()
         self.object_handler = ObjectHandler(self)
         self.level = Level(self, f"{LEVELS_PATH}\\level-1.csv")
         self.level.process_data()
@@ -40,7 +42,7 @@ class Game:
 
     def draw(self):
         self.screen.fill(BLACK)
-        self.object_handler.draw()
+        #self.object_handler.draw()
 
     def check_events(self):
         for event in pygame.event.get():
@@ -56,6 +58,7 @@ class Game:
             self.check_events()
             self.update()
             self.draw()
+            self.level.run()
 
 
 if __name__ == "__main__":
