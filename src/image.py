@@ -1,6 +1,7 @@
 import pygame
+from abc import ABC
 
-class Image:
+class Image(ABC):
     def __init__(self, image_path, scale=1, rotation=0) -> None:
         self.__scale = scale
         self.__rotation =  rotation
@@ -8,7 +9,7 @@ class Image:
         self.__image = pygame.image.load(image_path).convert_alpha()
         self.__image = pygame.transform.scale(self.__image, (self.__image.get_width() * scale, self.__image.get_height() * scale))
 
-    def scale(self, factor):
+    def scaleTo(self, factor):
         self.__image = pygame.transform.scale(self.__image, (self.__image.get_width() * factor, self.__image.get_height() * factor))
 
     @property

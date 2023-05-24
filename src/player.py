@@ -9,9 +9,8 @@ from .spritesheet import Spritesheet
 
 class Player(Object):
     def __init__(self, obj_handler, image: Image, animation: Animation, pos_x, pos_y) -> None:
-        super().__init__(obj_handler, pos_x, pos_y)
+        super().__init__(obj_handler, image, pos_x, pos_y)
     
-        self.player_img = image
         self.animation = animation
         self.direction = pygame.math.Vector2()
 
@@ -19,8 +18,6 @@ class Player(Object):
         self.is_running = False
         self.invert_sprite = False
 
-        self.image = self.player_img.image
-        self.rect = self.image.get_rect()
         self.rect.center = (pos_x, pos_y)
 
         self.frame_index = 0
