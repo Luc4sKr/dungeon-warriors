@@ -31,7 +31,7 @@ class Game:
         self.camera = YSortCameraGroup()
         self.object_handler = ObjectHandler(self)
         self.level = Level(self, f"{LEVELS_PATH}\\level-1.csv")
-        self.level.process_data()
+        self.level.create_map()
 
     def update(self):
         self.delta_time = self.clock.tick(FPS)

@@ -1,15 +1,29 @@
+import pygame
 import csv
 
-from .config import *
+from .camera import YSortCameraGroup
 from .tile import Tile
-from .spritesheet import Spritesheet
-from .animation import Animation
-from .player import Player
 
 class Level:
     def __init__(self, game, csv_file) -> None:
         self.game = game
         self.csv_file = csv_file
+
+        self.sprites_group = YSortCameraGroup()
+        self.floor_sprites = pygame.sprite.Group()
+        self.wall_sprites = pygame.sprite.Group()
+
+        self.create_map()
+
+    def create_map(self):
+        data = self.open_file()
+
+        for y, row in enumerate(data):
+            for x, tile in enumerate(row):
+                if int(tile) == 1:
+                    img = self.game.object_handler.TILE_FLOOR_1
+                    tile = Tile(img, x * 16, y * 16)
+                    self.floor_sprites.add(tile)
 
     def open_file(self):
         world_data = []
@@ -21,17 +35,7 @@ class Level:
                     c.append(tile)
                 world_data.append(c)      
         return world_data
-
-    def process_data(self):
-        data = self.open_file()
-
-        for y, row in enumerate(data):
-            for x, tile in enumerate(row):
-                if int(tile) == 1:
-                    img = self.game.object_handler.TILE_FLOOR_1
-                    Tile(self.game.object_handler, self.game.object_handler.TILE_FLOOR_1, x * img.image.get_width(), y * img.image.get_height())
-                    #self.game.object_handler.add_sprite(new_tile)
-
+    
     def run(self):
-        self.game.object_handler.sprite_list.custom_draw(self.game.object_handler.player)
-        self.game.object_handler.sprite_list.update()
+        self.sprites_group.custom_draw(self.game.object_handler.player)
+        self.sprites_group.update()

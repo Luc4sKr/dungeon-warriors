@@ -5,7 +5,6 @@ from .image import Image
 from .spritesheet import Spritesheet
 from .animation import Animation
 from .player import Player
-from .camera import YSortCameraGroup
 
 class ObjectHandler:
     def __init__(self, game) -> None:
@@ -27,7 +26,6 @@ class ObjectHandler:
         self.load_images()
 
     def update(self):
-        self.sprite_list.update()
         self.player_group.update()
     
     def draw(self):
