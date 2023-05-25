@@ -31,9 +31,9 @@ class ObjectHandler:
         self.player_group.update()
     
     def draw(self):
-        self.sprite_list.draw(self.game.screen)
-        self.player_group.draw(self.game.screen)
-        self.game.screen.blit(self.player.image, (self.player.rect.x - self.game.camera.offset.x, self.player.rect.y - self.game.camera.offset.y))
+        pass
+        #self.sprite_list.draw(self.game.screen)
+        #self.player_group.draw(self.game.screen)
 
 
     def add_sprite(self, sprite):
