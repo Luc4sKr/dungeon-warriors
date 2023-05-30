@@ -23,13 +23,12 @@ class Tilemap:
 
         for y, row in enumerate(data):
             for x, tile in enumerate(row):
-                img_obj = Object(f"assets/tilesets/map/{int(tile)}.png", ( x * 16 * SCALE, y * 16 * SCALE), scale=SCALE)
-                self.all_sprites.add(img_obj)
+                if int(tile) != 0:
+                    img_obj = Object(f"assets/tilesets/map/{int(tile)}.png", ( x * 16 * SCALE, y * 16 * SCALE), scale=SCALE)
+                    self.all_sprites.add(img_obj)
 
-                if int(tile) in WALL_TILES:
-                    self.wall_sprites.add(img_obj)
-
-        print(self.wall_sprites)
+                    if int(tile) in WALL_TILES:
+                        self.wall_sprites.add(img_obj)
 
     def open_file(self):
         world_data = []

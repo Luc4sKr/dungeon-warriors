@@ -9,7 +9,7 @@ class Game:
         pygame.init()
 
         self.screen = pygame.display.set_mode(RESOLUTION)
-        pygame.display.set_caption("animation")
+        pygame.display.set_caption("Dungeon Warriors")
 
         self.clock = pygame.time.Clock()
         self.game_over = False
@@ -29,6 +29,8 @@ class Game:
     def update(self):
         self.level.update()
         pygame.display.flip()
+
+        pygame.display.set_caption(f"FPS: {self.clock.get_fps()}")
 
     def draw(self):
         self.screen.fill((0, 0, 0))
