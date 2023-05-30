@@ -2,7 +2,9 @@ import pygame
 import sys
 
 from src.config import *
+from src.menu import MainMenu
 from src.level import Level
+
 
 class Game:
     def __init__(self) -> None:
@@ -10,13 +12,14 @@ class Game:
 
         self.screen = pygame.display.set_mode(RESOLUTION)
         pygame.display.set_caption("Dungeon Warriors")
-
         self.clock = pygame.time.Clock()
+
         self.game_over = False
 
-        self.new_game()
+        self.main_menu = MainMenu(self)
 
     def new_game(self):
+        self.game_over = False
         self.level = Level(self, "level-1")
 
     def check_events(self):
@@ -33,10 +36,12 @@ class Game:
         pygame.display.set_caption(f"FPS: {self.clock.get_fps()}")
 
     def draw(self):
-        self.screen.fill((0, 0, 0))
+        self.screen.fill(BLACK)
         self.level.draw()
 
     def run(self):
+        self.new_game()
+        
         while not self.game_over:
             self.clock.tick(FPS)
 
@@ -46,4 +51,3 @@ class Game:
 
 if __name__ == "__main__":
     game = Game()
-    game.run()
