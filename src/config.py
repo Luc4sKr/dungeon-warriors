@@ -7,6 +7,9 @@ FPS = 60
 
 PLAYER_IMAGE_PATH = "assets/sprites/warrior/sprite.png"
 
+SPRITES_PATH = "assets/sprites"
+WEAPONS_PATH = f"{SPRITES_PATH}/weapons"
+
 # Animations ID
 PLAYER_IDLE = 1
 PLAYER_RUN = 2

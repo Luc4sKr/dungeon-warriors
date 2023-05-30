@@ -29,6 +29,8 @@ class Game:
                 pygame.quit()
                 sys.exit()
 
+            self.level.player.weapon.shoot(event)
+
     def update(self):
         self.level.update()
         pygame.display.flip()

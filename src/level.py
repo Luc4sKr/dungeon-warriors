@@ -26,6 +26,7 @@ class Level:
         self.camera = Camera(self.player, WIDTH, HEIGHT)
 
         self.map.all_sprites.add(self.player)
+        self.map.all_sprites.add(self.player.weapon)
 
     def update(self):
         wall_collide = pygame.sprite.spritecollide(self.player, self.map.wall_sprites, False, pygame.sprite.collide_mask)
