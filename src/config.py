@@ -13,4 +13,4 @@ PLAYER_RUN = 2
 
 # Tilesets
 FLOOR_TILES = [1, 2]
-WALL_TILES = [3]
+WALL_TILES = [3, 4, 5, 6, 7, 8, 9, 10, 11]

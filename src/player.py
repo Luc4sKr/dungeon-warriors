@@ -4,10 +4,11 @@ from .config import *
 from .object import AnimatedObject
 
 class Player(AnimatedObject):
-    def __init__(self, animation, speed, image, pos: tuple, scale=1) -> None:
+    def __init__(self, animation, speed, image, pos: tuple, wall_sprites, scale=1) -> None:
         super().__init__(animation, image, pos, scale)
 
         self.speed = speed
+        self.wall_sprites = wall_sprites
 
         self.direction = pygame.math.Vector2(0, 0)
         self.pos = pygame.math.Vector2(pos)
@@ -43,10 +44,30 @@ class Player(AnimatedObject):
             self.is_running = True
 
         self.pos.x += self.direction.x * self.speed
+        self.collision("horizontal")
+
         self.pos.y += self.direction.y * self.speed
+        self.collision("vertical")
 
         self.rect.center = self.pos
-    
+
+    def collision(self, direction):
+        if direction == 'horizontal':
+            for sprite in self.wall_sprites:
+                if sprite.rect.colliderect(self.rect):
+                    if self.direction.x > 0: # moving right
+                        self.rect.right = sprite.rect.left
+                    if self.direction.x < 0: # moving left
+                        self.rect.left = sprite.rect.right
+
+        if direction == 'vertical':
+            for sprite in self.wall_sprites:
+                if sprite.rect.colliderect(self.rect):
+                    if self.direction.y > 0: # moving down
+                        self.rect.bottom = sprite.rect.top
+                    if self.direction.y < 0: # moving up
+                        self.rect.top = sprite.rect.bottom
+
     def animation_control(self):
         self.animation.select(PLAYER_IDLE)
         if self.is_running:
