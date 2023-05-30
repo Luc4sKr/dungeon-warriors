@@ -2,47 +2,22 @@ import pygame
 import sys
 
 from src.config import *
-from src.player import Player
-from src.image import Image
-from src.spritesheet import Spritesheet
-from src.animation import Animation
 from src.level import Level
-from src.camera import YSortCameraGroup
-
-from src.object_handler import ObjectHandler
 
 class Game:
-    def __init__(self):
+    def __init__(self) -> None:
         pygame.init()
-        pygame.mixer.init()
 
         self.screen = pygame.display.set_mode(RESOLUTION)
-        pygame.display.set_caption("Dungeon Warriors")
+        pygame.display.set_caption("animation")
 
         self.clock = pygame.time.Clock()
         self.game_over = False
-        self.delta_time = 1
-        self.global_event = pygame.USEREVENT
-        pygame.time.set_timer(self.global_event, 40)
 
         self.new_game()
 
     def new_game(self):
-        self.camera = YSortCameraGroup()
-        self.object_handler = ObjectHandler(self)
-        self.level = Level(self, f"{LEVELS_PATH}\\level-1.csv")
-        self.level.create_map()
-
-    def update(self):
-        self.delta_time = self.clock.tick(FPS)
-        self.object_handler.update()
-        pygame.display.flip()
-        
-        pygame.display.set_caption(f"FPS: {self.clock.get_fps()}")
-
-    def draw(self):
-        self.screen.fill(BLACK)
-        #self.object_handler.draw()
+        self.level = Level(self, "level-1")
 
     def check_events(self):
         for event in pygame.event.get():
@@ -51,15 +26,21 @@ class Game:
                 pygame.quit()
                 sys.exit()
 
+    def update(self):
+        self.level.update()
+        pygame.display.flip()
+
+    def draw(self):
+        self.screen.fill((0, 0, 0))
+        self.level.draw()
+
     def run(self):
         while not self.game_over:
             self.clock.tick(FPS)
 
             self.check_events()
-            self.update()
             self.draw()
-            self.level.run()
-
+            self.update()
 
 if __name__ == "__main__":
     game = Game()

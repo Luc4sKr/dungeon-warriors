@@ -1,41 +1,43 @@
 import pygame
-import csv
 
-from .camera import YSortCameraGroup
-from .tile import Tile
+from .config import *
+from .spritesheet import Spritesheet
+from .animation import Animation
+from .player import Player
+from .tilemap import Tilemap
+from .camera import Camera
+
 
 class Level:
-    def __init__(self, game, csv_file) -> None:
+    def __init__(self, game, level: str) -> None:
         self.game = game
-        self.csv_file = csv_file
+        self.level = level
 
-        self.sprites_group = YSortCameraGroup()
-        self.floor_sprites = pygame.sprite.Group()
-        self.wall_sprites = pygame.sprite.Group()
+        self.map = Tilemap(self)
 
-        self.create_map()
+        player_idle_spritesheet = Spritesheet("assets/sprites/warrior/idle", 240, SCALE)
+        player_run_spritesheet = Spritesheet("assets/sprites/warrior/run", 100, SCALE)
+        
+        player_anim = Animation()
+        player_anim.add(PLAYER_IDLE, player_idle_spritesheet)
+        player_anim.add(PLAYER_RUN, player_run_spritesheet)
+        self.player = Player(player_anim, 5, PLAYER_IMAGE_PATH, (100, 100), scale=SCALE)
 
-    def create_map(self):
-        data = self.open_file()
+        self.camera = Camera(self.player, WIDTH, HEIGHT)
 
-        for y, row in enumerate(data):
-            for x, tile in enumerate(row):
-                if int(tile) == 1:
-                    img = self.game.object_handler.TILE_FLOOR_1
-                    tile = Tile(img, x * 16, y * 16)
-                    self.floor_sprites.add(tile)
+        self.map.all_sprites.add(self.player)
 
-    def open_file(self):
-        world_data = []
-        c = []
-        with open(self.csv_file, newline="") as csvfile:
-            reader = csv.reader(csvfile, delimiter=",")
-            for x, row in enumerate(reader):
-                for y, tile in enumerate(row):
-                    c.append(tile)
-                world_data.append(c)      
-        return world_data
-    
-    def run(self):
-        self.sprites_group.custom_draw(self.game.object_handler.player)
-        self.sprites_group.update()
+    def update(self):
+        tst = pygame.sprite.spritecollide(self.player, self.map.wall_sprites, False, pygame.sprite.collide_mask)
+        if tst:
+            pass
+
+        self.camera.scroll()
+        self.map.update()
+        self.map.all_sprites.update()
+
+    def draw(self):
+        self.map.draw(self.game.screen)
+        
+        for sprite in self.map.all_sprites:
+            self.game.screen.blit(sprite.image, (sprite.rect.topleft + self.camera.offset))

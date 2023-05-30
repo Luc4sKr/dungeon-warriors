@@ -1,5 +1,5 @@
 import pygame
-from os import listdir
+
 
 DELAY = "delay"
 ANIMATION = "animation"
@@ -15,7 +15,7 @@ class Animation:
         self.frame_index = 0
 
     def add(self, id, spritesheet):
-        self.anims[id] = {ANIMATION: spritesheet.sprite_list, DELAY: spritesheet.delay}
+        self.anims[id] = {ANIMATION: spritesheet.list, DELAY: spritesheet.delay}
 
     def select(self, id):
         self.sequence = self.anims[id]
@@ -28,4 +28,4 @@ class Animation:
         if self.frame_index >= len(self.sequence[ANIMATION]):
             self.frame_index = 0
 
-        return self.sequence[ANIMATION][self.frame_index].image
+        return self.sequence[ANIMATION][self.frame_index]
