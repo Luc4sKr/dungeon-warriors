@@ -2,7 +2,7 @@ import pygame
 
 from .config import *
 from .object import AnimatedObject
-from .weapon import Bow
+from .weapon import Bow, Sword
 
 class Player(AnimatedObject):
     def __init__(self, animation, speed, image, pos: tuple, wall_sprites, scale=1) -> None:
@@ -11,7 +11,7 @@ class Player(AnimatedObject):
         self.speed = speed
         self.wall_sprites = wall_sprites
         
-        self.weapon = Bow(f"{WEAPONS_PATH}/bow/unarmed.png", self.rect.center, scale=2)
+        self.weapon = Sword(f"{WEAPONS_PATH}/sword/big_sword.png", self.rect.center, scale=2)
 
         self.direction = pygame.math.Vector2(0, 0)
         self.pos = pygame.math.Vector2(pos)
