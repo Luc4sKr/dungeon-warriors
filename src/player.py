@@ -3,7 +3,7 @@ import pygame
 from .config import *
 from .utils import get_mask_rect
 from .object import AnimatedObject
-from .weapon import Bow
+from .weapon import Bow, Sword
 
 class Player(AnimatedObject):
     def __init__(self, level, animation, speed, image, pos: tuple, wall_sprites, scale=1) -> None:
@@ -13,7 +13,7 @@ class Player(AnimatedObject):
         self.wall_sprites = wall_sprites
         self.level = level
         
-        self.weapon = Bow(f"{WEAPONS_PATH}/bow/unarmed.png", self.rect.center, scale=2)
+        self.weapon = Sword(f"{WEAPONS_PATH}/sword/big_sword.png", self.rect.center, scale=2)
 
         self.hitbox = get_mask_rect(self.image, *self.rect.topleft)
 
