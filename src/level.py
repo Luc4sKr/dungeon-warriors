@@ -21,7 +21,7 @@ class Level:
         player_anim = Animation()
         player_anim.add(PLAYER_IDLE, player_idle_spritesheet)
         player_anim.add(PLAYER_RUN, player_run_spritesheet)
-        self.player = Player(player_anim, 5, PLAYER_IMAGE_PATH, (HALF_WIDTH, HALF_HEIGHT), self.map.wall_sprites, scale=SCALE)
+        self.player = Player(self, player_anim, 5, PLAYER_IMAGE_PATH, (HALF_WIDTH, HALF_HEIGHT), self.map.wall_sprites, scale=SCALE)
 
         self.camera = Camera(self.player, WIDTH, HEIGHT)
 
