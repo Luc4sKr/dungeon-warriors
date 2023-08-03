@@ -21,6 +21,7 @@ class Menu(ABC):
             self.update()
 
     def update(self):
+        self.click = False
         pygame.display.flip()
 
     def draw(self):
@@ -33,12 +34,18 @@ class Menu(ABC):
                 self.game.game_over = True
                 pygame.quit()
                 sys.exit()
+            
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                if event.button == 1:
+                    self.click = True
+
             self.menu_events(event)
 
 
 class MainMenu(Menu):
     def __init__(self, game) -> None:
         super().__init__(game)
+        self.click = False
 
         # menus dependentes
         self.select_map_menu = SelectMapMenu(self.game)
@@ -48,11 +55,11 @@ class MainMenu(Menu):
         self.exit_btn = Button("EXIT", HALF_WIDTH - 100, EXIT_BTN_TOP, 200, 50, callback_function=self.exit)
 
     def update(self):
-        super().update()
+        self.play_btn.update(self.click)
+        self.options_btn.update(self.click)
+        self.exit_btn.update(self.click)
 
-        self.play_btn.update()
-        self.options_btn.update()
-        self.exit_btn.update()
+        super().update()
 
     def draw(self):
         super().draw()
@@ -85,26 +92,26 @@ class MainMenu(Menu):
 class SelectMapMenu(Menu):
     def __init__(self, game) -> None:
         super().__init__(game)
+        self.click = False
 
         self.selected_map = None
 
-        self.map_1_btn = Button("MAP 1", HALF_WIDTH - 100, 200, 200, 50, callback_function=None)
+        self.map_1_btn = Button("MAP 1", HALF_WIDTH - 100, 200, 200, 50, callback_function=self.select_map_1)
         self.map_2_btn = Button("MAP 2", HALF_WIDTH - 100, 260, 200, 50, callback_function=self.select_map_2)
 
     def menu_events(self, event):
         pass
 
     def update(self):
-        super().update()
+        self.map_1_btn.update(self.click)
+        self.map_2_btn.update(self.click)
 
-        self.map_1_btn.update()
-        self.map_2_btn.update()
+        super().update()
 
     def draw(self):
         super().draw()
 
         draw_text(self.game.screen, "Select Map", TITLE_FONT, WHITE, HALF_WIDTH, 50)
-        draw_text(self.game.screen, f"{self.map_1_btn.click}", TITLE_FONT, GREEN, HALF_WIDTH, 150)
 
         self.map_1_btn.draw(self.game.screen)
         self.map_2_btn.draw(self.game.screen)

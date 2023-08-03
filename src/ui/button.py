@@ -21,9 +21,6 @@ class Button:
         self.button_border = pygame.Rect(int(self.left - 2), int(self.top - 2), int(self.width + 4), int(self.height + 4))
         self.button = pygame.Rect(int(self.left), int(self.top), int(self.width), int(self.height))
 
-        self.click = False
-        self.pressed = False
-
         self.callback_function = callback_function
 
     def draw(self, screen):
@@ -32,15 +29,14 @@ class Button:
 
         draw_text(screen, self.text, self.font_size, self.font_color, self.left + (self.width / 2), self.top + (self.height / 2))
 
-    def update(self):
+    def update(self, click):
         self.mouse_pos = pygame.mouse.get_pos()
-        self.click = pygame.mouse.get_pressed()[0]
 
         self.check_hover()
-        self.check_click()
+        self.check_click(click)
 
-    def check_click(self):
-        if self.check_hover() and self.click:
+    def check_click(self, click):
+        if self.check_hover() and click:
             if self.callback_function:
                 self.callback_function()
 
