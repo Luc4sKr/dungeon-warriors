@@ -2,15 +2,17 @@ import pygame
 
 from .constants import *
 from .entity import AnimatedEntity
+from .weapon import Weapon
 
 class Player(AnimatedEntity):
-    def __init__(self, game, animation, speed, image, pos: tuple, scale=1) -> None:
+    def __init__(self, game, animation, speed, image, pos: tuple, scale=SCALE) -> None:
         super().__init__(game, animation, image, pos, speed, scale)
 
         self.game = game
+        self.weapon = Weapon(self, "sword", 10)
+        self.game.weapon_group.add(self.weapon)
 
         self.speed = speed
-
         self.direction = pygame.math.Vector2(0, 0)
         self.pos = pygame.math.Vector2(pos)
 

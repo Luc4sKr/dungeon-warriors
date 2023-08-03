@@ -22,19 +22,22 @@ class ObjectHandler:
         player_anim.add(PLAYER_RUN, player_run_spritesheet)
 
         self.player = Player(self, player_anim, 5, "assets/characters/warrior/sprite.png", (100, 100), scale=SCALE)
-        self.all_sprites.add(self.player)
+        self.player_group.add(self.player)
 
     def load_camera(self):
         self.camera = Camera(self.player, WIDTH, HEIGHT)
 
     def load_groups(self):
-        self.all_sprites = pygame.sprite.Group()
         self.wall_sprites = pygame.sprite.Group()
         self.floor_sprites = pygame.sprite.Group()
         self.objects_sprites = pygame.sprite.Group()
 
+        self.player_group = pygame.sprite.GroupSingle()
+        self.weapon_group = pygame.sprite.GroupSingle()
+
     def update(self):
-        self.all_sprites.update()
+        self.player_group.update()
+        self.weapon_group.update()
         self.camera.scroll()
 
     def draw(self, screen):
@@ -47,8 +50,13 @@ class ObjectHandler:
         for sprite in self.objects_sprites:
             screen.blit(sprite.image, (sprite.rect.topleft + self.camera.offset))
         
-        for sprite in self.all_sprites:
+        for sprite in self.player_group:
             screen.blit(sprite.image, (sprite.rect.topleft + self.camera.offset))
+
+        for sprite in self.weapon_group:
+            screen.blit(sprite.image, (sprite.rect.topleft + self.camera.offset))
+
+        
         
         
 

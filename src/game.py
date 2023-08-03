@@ -20,9 +20,10 @@ class Game:
         self.game_over = False
 
     def start(self):
-        self.main_menu.run()
+        #self.main_menu.run()
+        self.new_game()
 
-    def new_game(self, map):
+    def new_game(self, map=1):
         self.game_over = False
         self.object_handler = ObjectHandler()
         self.map = Map(self.object_handler, map)
