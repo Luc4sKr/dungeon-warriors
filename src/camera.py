@@ -10,6 +10,6 @@ class Camera:
         self.offset = Vector2(0,0)
 
     def scroll(self):
-        self.pointTarget = self.target.pos - self.camera
+        self.pointTarget = self.target.rect.center - self.camera
         self.camera += self.pointTarget
         self.offset = -self.camera + Vector2(self.width / 2, self.height / 2)

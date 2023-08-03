@@ -1,21 +1,15 @@
 import pygame
 
-from .config import *
-from .utils import get_mask_rect
-from .object import AnimatedObject
-from .weapon import Bow, Sword
+from .constants import *
+from .entity import AnimatedEntity
 
-class Player(AnimatedObject):
-    def __init__(self, level, animation, speed, image, pos: tuple, wall_sprites, scale=1) -> None:
-        super().__init__(animation, image, pos, scale)
+class Player(AnimatedEntity):
+    def __init__(self, game, animation, speed, image, pos: tuple, scale=1) -> None:
+        super().__init__(game, animation, image, pos, speed, scale)
+
+        self.game = game
 
         self.speed = speed
-        self.wall_sprites = wall_sprites
-        self.level = level
-        
-        self.weapon = Sword(f"{WEAPONS_PATH}/sword/big_sword.png", self.rect.center, scale=2)
-
-        self.hitbox = get_mask_rect(self.image, *self.rect.topleft)
 
         self.direction = pygame.math.Vector2(0, 0)
         self.pos = pygame.math.Vector2(pos)
@@ -50,24 +44,12 @@ class Player(AnimatedObject):
             self.direction = self.direction.normalize()
             self.is_running = True
 
-        self.hitbox = get_mask_rect(self.image, *self.rect.topleft)
+        self.rect.x += self.direction.x * self.speed
+        super().wall_collision("horizontal")
 
-        self.pos.x += self.direction.x * self.speed
-        self.pos.y += self.direction.y * self.speed
+        self.rect.y += self.direction.y * self.speed
+        super().wall_collision("vertical")
 
-        self.wall_collision()
-        self.rect.center = self.pos
-
-    def wall_collision(self):
-        test_rect = self.hitbox.move(self.direction.x * self.speed, self.direction.y * self.speed)
-        collide_points = (test_rect.midbottom, test_rect.bottomleft, test_rect.bottomright)
-        for wall in self.level.map.wall_sprites:
-            if any(wall.rect.collidepoint(point) for point in collide_points):
-                self.speed = 0
-            else: 
-                self.speed = 5
-            
-        print(f"{self.rect.center}, {test_rect.center}")
 
     def animation_control(self):
         self.animation.select(PLAYER_IDLE)
@@ -77,7 +59,7 @@ class Player(AnimatedObject):
         self.image = self.animation.update_animation()
         self.image = pygame.transform.flip(self.image, self.invert_sprite, False)
 
+
     def update(self):
         self.input()
         self.animation_control()
-
