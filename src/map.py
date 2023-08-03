@@ -22,16 +22,19 @@ class Map:
             for y, row in enumerate(tileset):
                 for x, tile in enumerate(row):
                     if int(tile) > 0:
-                        tile = Tile(f"{file}/{tile.strip()}.png", x * 16 * SCALE, y * 16 * SCALE, scale=SCALE)
+                        t = Tile(f"{file}/{tile.strip()}.png", x * 16 * SCALE, y * 16 * SCALE, scale=SCALE)
 
                         if file == "wall":
-                            self.obj_handler.wall_sprites.add(tile)
+                            self.obj_handler.wall_sprites.add(t)
                         
                         if file == "floor":
-                            self.obj_handler.floor_sprites.add(tile)
+                            self.obj_handler.floor_sprites.add(t)
+
+                            if int(tile.strip()) == 9:
+                                pass
 
                         if file == "objects":
-                            self.obj_handler.objects_sprites.add(tile)
+                            self.obj_handler.objects_sprites.add(t)
 
 
     def load_tiles(self):
