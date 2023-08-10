@@ -55,10 +55,3 @@ class ObjectHandler:
 
         for sprite in self.weapon_group:
             screen.blit(sprite.image, (sprite.rect.topleft + self.camera.offset))
-
-        
-        
-        
-
-    
-    
