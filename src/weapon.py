@@ -43,13 +43,14 @@ class WeaponSwing:
 
     def swing(self):
         self.angle += 20 * self.swing_side
-        position = self.weapon.player.hitbox.center
-        self.weapon.image = pygame.transform.rotozoom(self.weapon.original_image, self.angle, 1)
+        position = self.weapon.player.rect.center
+        self.weapon.image = pygame.transform.rotozoom(self.weapon.base_image, self.angle, 1)
         offset_rotated = self.offset.rotate(-self.angle)
         self.weapon.rect = self.weapon.image.get_rect(center=position + offset_rotated)
-        # self.rect_mask = get_mask_rect(self.image, *self.rect.topleft)
-        self.weapon.hitbox = pygame.mask.from_surface(self.weapon.image)
+        self.weapon.rect = pygame.mask.from_surface(self.weapon.image)
         self.counter += 1
+
+        print(self.angle)
 
 
 class Weapon(pygame.sprite.Sprite):
@@ -73,43 +74,6 @@ class Weapon(pygame.sprite.Sprite):
         self.weapon_swing = WeaponSwing(self)
         self.starting_position = [self.hitbox.bottomleft[0] - 1, self.hitbox.bottomleft[1]]
 
-    def detect_collision(self):
-        if self.game.player.hitbox.colliderect(self.rect):
-            self.image = self.image_picked
-            self.interaction = True
-        else:
-            self.image = self.original_image
-            self.interaction = False
-            self.show_name.reset_line_length()
-
-    def interact(self):
-        self.weapon_swing.reset()
-        self.player = self.game.player
-        self.player.items.append(self)
-        if not self.player.weapon:
-            self.player.weapon = self
-        if self.room == self.game.world_manager.current_room:
-            self.room.objects.remove(self)
-        self.interaction = False
-        self.show_name.reset_line_length()
-        self.game.sound_manager.play_get_item_sound()
-
-    def drop(self):
-        self.game.sound_manager.play_drop_sound()
-        self.room = self.game.world_manager.current_room
-        self.player.items.remove(self)
-        self.player.weapon = None
-        self.game.world_manager.current_room.objects.append(self)
-        if self.player.items:
-            self.player.weapon = self.player.items[-1]
-        self.load_image()
-        self.rect = self.image.get_rect()
-        self.hitbox = get_mask_rect(self.image, *self.rect.topleft)
-        self.rect.x = self.player.rect.x
-        self.rect.y = self.player.rect.y
-        self.player = None
-        self.weapon_swing.offset_rotated = pygame.math.Vector2(0, -25)
-
     def enemy_collision(self):
         for enemy in self.game.enemy_manager.enemy_list:
             if (
@@ -125,14 +89,13 @@ class Weapon(pygame.sprite.Sprite):
                 enemy.weapon_hurt_cooldown = pygame.time.get_ticks()
 
     def player_update(self):
-        self.interaction = False
         if self.weapon_swing.counter == 10:
-            self.original_image = pygame.transform.flip(self.original_image, 1, 0)
+            self.original_image = pygame.transform.flip(self.base_image, 1, 0)
             self.player.attacking = False
             self.weapon_swing.counter = 0
         if self.player.attacking and self.weapon_swing.counter <= 10:
             self.weapon_swing.swing()
-            self.enemy_collision()
+            #self.enemy_collision()
         else:
             self.weapon_swing.rotate()
 
@@ -149,7 +112,7 @@ class Weapon(pygame.sprite.Sprite):
                 self.shadow.draw_shadow(surface)
 
     def update(self):
-        self.weapon_swing.rotate()
+        self.player_update()
 
     def draw(self):
         surface = self.room.tile_map.map_surface
@@ -161,38 +124,3 @@ class Weapon(pygame.sprite.Sprite):
         self.show_price.draw(surface)
         self.draw_shadow(surface)
 
-
-
-
-
-
-'''
-class Weapon(pygame.sprite.Sprite):
-    def __init__(self, player, image, damage, scale=SCALE):
-        super().__init__()
-        self.player = player
-
-        self.image = pygame.image.load(f"assets/sprites/weapons/{image}.png").convert_alpha()
-        self.image = pygame.transform.scale(self.image, (self.image.get_width() * scale, self.image.get_height() * scale))
-        self.base_image = self.image
-        self.rect = self.image.get_rect()
-
-        self.rect.center = self.player.rect.center
-
-    def rotate(self):
-        mx, my = pygame.mouse.get_pos()
-        dx = mx - self.player.rect.centerx
-        dy = my - self.player.rect.centery
-
-        self.angle = (180 / math.pi) * math.atan2(dy, dx)
-
-        position = self.player.rect.center
-        offset_rotated = self.offset.rotate(-self.angle)
-        self.rect = self.image.get_rect(center=position + offset_rotated)
-        self.offset_rotated = pygame.math.Vector2(0, -35).rotate(-self.angle)
-
-        self.image = pygame.transform.rotate(self.base_image, self.angle)
-
-    def update(self):
-        self.rect.center = self.player.rect.center
-'''

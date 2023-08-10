@@ -19,6 +19,10 @@ class Player(AnimatedEntity):
         self.is_running = False
         self.invert_sprite = False
 
+        self.time = 0
+        self.attack_cooldown = 350
+        self.attacking = False
+
     def input(self):
         keys = pygame.key.get_pressed()
 
@@ -40,6 +44,12 @@ class Player(AnimatedEntity):
 
         self.move()
 
+        if pygame.mouse.get_pressed()[0] and pygame.time.get_ticks() - self.time > self.attack_cooldown:
+            self.time = pygame.time.get_ticks()
+            self.attacking = True
+            self.weapon.weapon_swing.swing_side *= (-1)
+
+
     def move(self):
         self.is_running = False
         if self.direction.magnitude() != 0:
@@ -52,7 +62,6 @@ class Player(AnimatedEntity):
         self.rect.y += self.direction.y * self.speed
         super().wall_collision("vertical")
 
-
     def animation_control(self):
         self.animation.select(PLAYER_IDLE)
         if self.is_running:
@@ -61,7 +70,7 @@ class Player(AnimatedEntity):
         self.image = self.animation.update_animation()
         self.image = pygame.transform.flip(self.image, self.invert_sprite, False)
 
-
     def update(self):
         self.input()
         self.animation_control()
+
