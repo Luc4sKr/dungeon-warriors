@@ -74,3 +74,4 @@ class Player(AnimatedEntity):
         self.input()
         self.animation_control()
 
+

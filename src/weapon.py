@@ -38,7 +38,7 @@ class WeaponSwing:
 
         offset_rotated = self.offset.rotate(-self.angle)
         self.weapon.rect = self.weapon.image.get_rect(center=position + offset_rotated)
-        self.weapon.hitbox = pygame.mask.from_surface(self.weapon.image)
+        #self.weapon.hitbox = pygame.mask.from_surface(self.weapon.image)
         self.offset_rotated = pygame.math.Vector2(0, -35).rotate(-self.angle)
 
     def swing(self):
@@ -47,10 +47,8 @@ class WeaponSwing:
         self.weapon.image = pygame.transform.rotozoom(self.weapon.base_image, self.angle, 1)
         offset_rotated = self.offset.rotate(-self.angle)
         self.weapon.rect = self.weapon.image.get_rect(center=position + offset_rotated)
-        self.weapon.rect = pygame.mask.from_surface(self.weapon.image)
+        #self.weapon.rect = pygame.mask.from_surface(self.weapon.image)
         self.counter += 1
-
-        print(self.angle)
 
 
 class Weapon(pygame.sprite.Sprite):
@@ -61,7 +59,7 @@ class Weapon(pygame.sprite.Sprite):
         self.image = pygame.transform.scale(self.image, (self.image.get_width() * scale, self.image.get_height() * scale))
         self.base_image = self.image
         self.rect = self.image.get_rect()
-        self.hitbox = get_mask_rect(self.base_image, *self.rect.topleft)
+        #self.hitbox = get_mask_rect(self.base_image, *self.rect.topleft)
 
         self.player = player
 
@@ -72,7 +70,7 @@ class Weapon(pygame.sprite.Sprite):
 
         self.time = 0
         self.weapon_swing = WeaponSwing(self)
-        self.starting_position = [self.hitbox.bottomleft[0] - 1, self.hitbox.bottomleft[1]]
+        self.starting_position = [self.rect.bottomleft[0] - 1, self.rect.bottomleft[1]]
 
     def enemy_collision(self):
         for enemy in self.game.enemy_manager.enemy_list:
@@ -114,13 +112,4 @@ class Weapon(pygame.sprite.Sprite):
     def update(self):
         self.player_update()
 
-    def draw(self):
-        surface = self.room.tile_map.map_surface
-        if self.player:
-            surface = self.game.screen
-        surface.blit(self.image, self.rect)
-        if self.interaction:
-            self.show_name.draw(surface, self.rect)
-        self.show_price.draw(surface)
-        self.draw_shadow(surface)
 
