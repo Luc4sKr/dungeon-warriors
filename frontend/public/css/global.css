@@ -1,6 +1,8 @@
 :root {
     --font-color: #fff8c0;
     --background-color: #292929;
+    --header-color: #FF2449;
+    --button-color: #FF2449;
 }
 
 * {
@@ -11,6 +13,10 @@
 
 body {
     background-color: var(--background-color);
+}
+
+p {
+    color: #fff;
 }
 
 .link {

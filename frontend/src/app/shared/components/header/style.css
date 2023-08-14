@@ -2,5 +2,5 @@
     height: 100px;
     display: flex;
     align-items: center;
-    background-color: #FF2449;
+    background-color: var(--header-color);
 }
