@@ -1,4 +1,4 @@
-export interface Player {
+export type Player = {
     id: number,
     username: string,
     email: string,

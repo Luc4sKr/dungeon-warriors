@@ -34,7 +34,7 @@ export const BasicTable = () => {
                     </TableRow>
                 </TableHead>
                 <TableBody>
-                    {players.map((player) => (
+                    {players.map((player: Player) => (
                         <TableRow
                             key={player.id}
                             sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
