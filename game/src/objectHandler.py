@@ -21,7 +21,7 @@ class ObjectHandler:
         player_anim.add(PLAYER_IDLE, player_idle_spritesheet)
         player_anim.add(PLAYER_RUN, player_run_spritesheet)
 
-        self.player = Player(self, player_anim, 5, "assets/characters/warrior/sprite.png", (100, 100), scale=SCALE)
+        self.player = Player(self, player_anim, 5, "assets/characters/warrior/sprite.png", (0, 0), scale=SCALE)
         self.player_group.add(self.player)
 
     def load_camera(self):

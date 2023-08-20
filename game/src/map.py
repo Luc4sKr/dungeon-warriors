@@ -1,8 +1,6 @@
 import pygame, csv
 from os import listdir
 
-from pygame.sprite import AbstractGroup
-
 from .constants import *
 from .utils import *
 
@@ -21,7 +19,12 @@ class Map:
         for file, tileset in tiles.items():
             for y, row in enumerate(tileset):
                 for x, tile in enumerate(row):
-                    if int(tile) > 0:
+                    
+                    if tile.strip() == "P":
+                        self.obj_handler.player.rect.x = x * 16 * SCALE
+                        self.obj_handler.player.rect.y = y * 16 * SCALE
+
+                    elif int(tile) > 0:
                         t = Tile(f"{file}/{tile.strip()}.png", x * 16 * SCALE, y * 16 * SCALE, scale=SCALE)
 
                         if file == "wall":
