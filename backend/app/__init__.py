@@ -20,6 +20,9 @@ ma = Marshmallow(app)
 
 migrate = Migrate(app, db)
 
+from .models.weapon import Weapon
+from .models.player import Player
+
 from .models import *
 from .views import *
 from .routes import *

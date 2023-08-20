@@ -1,11 +1,14 @@
 import { Route, Routes, BrowserRouter, Navigate } from "react-router-dom";
-import { Home } from "../pages";
+import { Header } from "../shared/components/header/Header";
+import { Home, Players } from "../pages";
 
-export const RoutesPaht = () => {
+export const RoutesPath = () => {
     return (
         <BrowserRouter>
+            <Header />
             <Routes>
                 <Route path="/" Component={Home} />
+                <Route path="/players" Component={Players}/>
                 <Route path="*" Component={() => <Navigate to="/" />}/>
             </Routes>
         </BrowserRouter>

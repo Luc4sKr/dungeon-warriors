@@ -1,8 +1,8 @@
-import { RoutesPaht } from './routes'
+import { RoutesPath } from './routes'
 
 function App() {
   return (
-    <RoutesPaht />
+    <RoutesPath />
   )
 }
 

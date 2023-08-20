@@ -24,7 +24,7 @@ class PlayerSchema(ma.Schema):
     id = fields.Integer()
     username = fields.Str()
     email = fields.Str()
-    password = fields.Srt()
+    password = fields.Str()
     created_on = fields.DateTime()
     max_score = fields.Integer()
     coins = fields.Integer()

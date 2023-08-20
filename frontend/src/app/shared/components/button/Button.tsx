@@ -1,6 +1,6 @@
 import { ButtonHTMLAttributes, ReactNode, ReactElement, cloneElement } from "react"
 
-import "./style.css"
+import "./Button.css"
 
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
     children: ReactNode;
@@ -32,6 +32,7 @@ export const DefaultButton = (props: ButtonProps) => {
     )
 }
 
+// para depis
 export const TransparentButton = () => {
-    return <button>aaaa</button>
+    return <button>teste</button>
 }
