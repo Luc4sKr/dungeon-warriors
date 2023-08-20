@@ -23,3 +23,5 @@ EXIT_BTN_TOP = 270 + 50
 # Animations ID
 PLAYER_IDLE = 1
 PLAYER_RUN = 2
+
+ENEMY_IDLE = 1

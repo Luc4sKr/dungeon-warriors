@@ -4,6 +4,7 @@ from .constants import *
 from .entity import AnimatedEntity
 from .weapon import Weapon
 
+
 class Player(AnimatedEntity):
     def __init__(self, game, animation, speed, image, pos: tuple, scale=SCALE) -> None:
         super().__init__(game, animation, image, pos, speed, scale)

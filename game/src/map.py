@@ -34,7 +34,7 @@ class Map:
                             self.obj_handler.floor_sprites.add(t)
 
                             if int(tile.strip()) == 9:
-                                pass
+                                self.obj_handler.enemy_spawn.add((x * 16 * SCALE, y * 16 * SCALE))
 
                         if file == "objects":
                             self.obj_handler.objects_sprites.add(t)
