@@ -1,0 +1,11 @@
+.title {
+    text-align: center;
+    font-size: 50px;
+    margin: 30px 0px;
+    color: var(--font-color);
+}
+
+.tableContainer {
+    margin: 0 auto;
+    width: 80%;
+}

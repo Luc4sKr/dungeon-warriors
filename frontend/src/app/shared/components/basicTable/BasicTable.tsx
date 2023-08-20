@@ -26,11 +26,11 @@ export const BasicTable = () => {
             <Table sx={{ minWidth: 650 }} aria-label="Player table">
                 <TableHead>
                     <TableRow>
-                        <TableCell>Id</TableCell>
-                        <TableCell align="right">Username</TableCell>
-                        <TableCell align="right">Email</TableCell>
-                        <TableCell align="right">Coins(g)</TableCell>
-                        <TableCell align="right">Max Score</TableCell>
+                        <TableCell align="center">Id</TableCell>
+                        <TableCell align="center">Username</TableCell>
+                        <TableCell align="center">Email</TableCell>
+                        <TableCell align="center">Coins(g)</TableCell>
+                        <TableCell align="center">Max Score</TableCell>
                     </TableRow>
                 </TableHead>
                 <TableBody>
@@ -39,13 +39,11 @@ export const BasicTable = () => {
                             key={player.id}
                             sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                         >
-                            <TableCell component="th" scope="row">
-                                {player.id}
-                            </TableCell>
-                            <TableCell align="right">{player.username}</TableCell>
-                            <TableCell align="right">{player.email}</TableCell>
-                            <TableCell align="right">{player.coins}</TableCell>
-                            <TableCell align="right">{player.max_score}</TableCell>
+                            <TableCell align="center"> {player.id} </TableCell>
+                            <TableCell align="center">{player.username}</TableCell>
+                            <TableCell align="center">{player.email}</TableCell>
+                            <TableCell align="center">{player.coins}</TableCell>
+                            <TableCell align="center">{player.max_score}</TableCell>
                         </TableRow>
                     ))}
                 </TableBody>
