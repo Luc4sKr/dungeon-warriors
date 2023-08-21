@@ -6,12 +6,12 @@ from .weapon import Weapon
 
 
 class Player(AnimatedEntity):
-    def __init__(self, game, animation, speed, image, pos: tuple, scale=SCALE) -> None:
-        super().__init__(game, animation, image, pos, speed, scale)
+    def __init__(self, obj_handler, animation, speed, life, image, pos: tuple, scale=SCALE) -> None:
+        super().__init__(obj_handler, animation, image, pos, speed, life, scale)
 
-        self.game = game
-        self.weapon = Weapon(self, "sword", 10)
-        self.game.weapon_group.add(self.weapon)
+        self.obj_handler = obj_handler
+        self.weapon = Weapon(self.obj_handler, self, "sword", 10)
+        self.obj_handler.weapon_group.add(self.weapon)
 
         self.speed = speed
         self.direction = pygame.math.Vector2(0, 0)

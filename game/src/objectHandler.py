@@ -34,7 +34,7 @@ class ObjectHandler:
         player_anim.add(PLAYER_IDLE, player_idle_spritesheet)
         player_anim.add(PLAYER_RUN, player_run_spritesheet)
 
-        self.player = Player(self, player_anim, 5, "assets/sprites/characters/warrior/sprite.png", (0, 0), scale=SCALE)
+        self.player = Player(self, player_anim, 5, 100, "assets/sprites/characters/warrior/sprite.png", (0, 0), scale=SCALE)
         self.player_group.add(self.player)
     
     def load_enemy(self):

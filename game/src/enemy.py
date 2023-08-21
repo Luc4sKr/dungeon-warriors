@@ -5,8 +5,8 @@ from .entity import AnimatedEntity
 
 
 class Enemy(AnimatedEntity):
-    def __init__(self, game, animation, image_path, pos: tuple, speed, scale=SCALE) -> None:
-        super().__init__(game, animation, image_path, pos, speed, scale)
+    def __init__(self, game, animation, image_path, pos: tuple, speed, life, scale=SCALE) -> None:
+        super().__init__(game, animation, image_path, pos, speed, life, scale)
 
         self.game = game
 

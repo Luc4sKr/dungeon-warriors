@@ -22,8 +22,8 @@ class WeaponSwing:
 
     def rotate(self, weapon=None):
         mx, my = pygame.mouse.get_pos()
-        dx = mx - self.weapon.player.rect.centerx - self.weapon.player.game.camera.offset.x
-        dy = my - self.weapon.player.rect.centery - self.weapon.player.game.camera.offset.y
+        dx = mx - self.weapon.player.rect.centerx - self.weapon.player.obj_handler.camera.offset.x
+        dy = my - self.weapon.player.rect.centery - self.weapon.player.obj_handler.camera.offset.y
 
         if self.swing_side == 1:
             self.angle = (180 / math.pi) * math.atan2(-self.swing_side * dy, dx) + self.left_swing
@@ -38,7 +38,6 @@ class WeaponSwing:
 
         offset_rotated = self.offset.rotate(-self.angle)
         self.weapon.rect = self.weapon.image.get_rect(center=position + offset_rotated)
-        #self.weapon.hitbox = pygame.mask.from_surface(self.weapon.image)
         self.offset_rotated = pygame.math.Vector2(0, -35).rotate(-self.angle)
 
     def swing(self):
@@ -47,22 +46,21 @@ class WeaponSwing:
         self.weapon.image = pygame.transform.rotozoom(self.weapon.base_image, self.angle, 1)
         offset_rotated = self.offset.rotate(-self.angle)
         self.weapon.rect = self.weapon.image.get_rect(center=position + offset_rotated)
-        #self.weapon.rect = pygame.mask.from_surface(self.weapon.image)
         self.counter += 1
 
 
 class Weapon(pygame.sprite.Sprite):
-    def __init__(self, player, image, damage, scale=SCALE):
+    def __init__(self, obj_handler, player, image, damage, scale=SCALE):
         super().__init__()
+
+        self.obj_handler = obj_handler
 
         self.image = pygame.image.load(f"assets/sprites/weapons/{image}.png").convert_alpha()
         self.image = pygame.transform.scale(self.image, (self.image.get_width() * scale, self.image.get_height() * scale))
         self.base_image = self.image
         self.rect = self.image.get_rect()
-        #self.hitbox = get_mask_rect(self.base_image, *self.rect.topleft)
 
         self.player = player
-
         self.damage = damage
 
         self.rect.x = self.player.rect.centerx
@@ -73,43 +71,29 @@ class Weapon(pygame.sprite.Sprite):
         self.starting_position = [self.rect.bottomleft[0] - 1, self.rect.bottomleft[1]]
 
     def enemy_collision(self):
-        for enemy in self.game.enemy_manager.enemy_list:
+        for enemy in self.obj_handler.enemy_group:
             if (
-                    pygame.sprite.collide_mask(self.game.player.weapon, enemy)
+                    pygame.sprite.collide_mask(self.player.weapon, enemy)
                     and enemy.dead is False
-                    and enemy.can_get_hurt_from_weapon()
+                    #and enemy.can_get_hurt_from_weapon()
             ):
-                self.game.player.weapon.special_effect(enemy)
+                #self.player.weapon.special_effect(enemy)
                 enemy.hurt = True
-                enemy.hp -= self.game.player.weapon.damage * self.game.player.strength
-                enemy.entity_animation.hurt_timer = pygame.time.get_ticks()
-                self.game.sound_manager.play_hit_sound()
-                enemy.weapon_hurt_cooldown = pygame.time.get_ticks()
+                enemy.life -= self.player.weapon.damage #* self.game.player.strength
+                #enemy.entity_animation.hurt_timer = pygame.time.get_ticks()
+                #self.game.sound_manager.play_hit_sound()
+                #enemy.weapon_hurt_cooldown = pygame.time.get_ticks()
 
-    def player_update(self):
+    def update(self):
         if self.weapon_swing.counter == 10:
             self.original_image = pygame.transform.flip(self.base_image, 1, 0)
             self.player.attacking = False
             self.weapon_swing.counter = 0
         if self.player.attacking and self.weapon_swing.counter <= 10:
             self.weapon_swing.swing()
-            #self.enemy_collision()
+            self.enemy_collision()
         else:
             self.weapon_swing.rotate()
 
-    def draw_shadow(self, surface):
-        if self.dropped:
-            self.shadow.set_shadow_position()
-            self.shadow.draw_shadow(surface)
-        else:
-            if not self.shadow.shadow_set:
-                self.shadow.set_shadow_position()
-            if self.player:
-                self.shadow.shadow_set = False
-            if self.player is None:
-                self.shadow.draw_shadow(surface)
-
-    def update(self):
-        self.player_update()
 
 

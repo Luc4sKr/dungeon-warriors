@@ -4,7 +4,7 @@ from .utils import *
 
 
 class Entity(pygame.sprite.Sprite):
-    def __init__(self, obj_handler, image_path, pos: tuple, speed, scale=SCALE) -> None:
+    def __init__(self, obj_handler, image_path, pos: tuple, speed, life, scale=SCALE) -> None:
         super().__init__()
 
         self.obj_handler = obj_handler
@@ -15,6 +15,7 @@ class Entity(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.rect.center = pos
         self.speed = speed
+        self.life = life
         self.dead = False
 
     def wall_collision(self, direction):
@@ -35,8 +36,8 @@ class Entity(pygame.sprite.Sprite):
             
 
 class AnimatedEntity(Entity):
-    def __init__(self, game, animation, image_path, pos: tuple, speed, scale=SCALE) -> None:
-        super().__init__(game, image_path, pos, speed, scale)
+    def __init__(self, game, animation, image_path, pos: tuple, speed, life, scale=SCALE) -> None:
+        super().__init__(game, image_path, pos, speed, life, scale)
 
         self.animation = animation
         self.frame_index = 0
