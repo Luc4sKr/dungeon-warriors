@@ -50,7 +50,6 @@ class Player(AnimatedEntity):
             self.attacking = True
             self.weapon.weapon_swing.swing_side *= (-1)
 
-
     def move(self):
         self.is_running = False
         if self.direction.magnitude() != 0:
@@ -71,7 +70,13 @@ class Player(AnimatedEntity):
         self.image = self.animation.update_animation()
         self.image = pygame.transform.flip(self.image, self.invert_sprite, False)
 
+    def enemy_collide(self):
+        for enemy in self.obj_handler.enemy_group:
+            if pygame.sprite.collide_mask(self, enemy):
+                self.life -= enemy.damage
+
     def update(self):
         self.input()
         self.animation_control()
+        self.enemy_collide()
 

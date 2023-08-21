@@ -10,6 +10,7 @@ class Enemy(AnimatedEntity):
 
         self.game = game
 
+        self.damage = 10
         self.speed = speed
         self.direction = pygame.math.Vector2(0, 0)
         self.pos = pygame.math.Vector2(pos)

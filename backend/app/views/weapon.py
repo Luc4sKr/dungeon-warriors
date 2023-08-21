@@ -1,7 +1,7 @@
 from app import db, create_access_token
 from flask import request, jsonify
 from ..models.weapon import Weapon, weapon_schema, weapons_schemas
-
+import os
 
 def get_weapons():
     weapons = Weapon.query.all()
@@ -34,3 +34,14 @@ def post_weapon():
 
     except:
         return jsonify({"message": "unable to create", "data": {}}), 500
+    
+def post_weapon_image():
+    data = request.files("image")
+
+    try: 
+        arquivo_img = f"/app/images/{data.filename}"
+        data.save(arquivo_img)
+
+        return jsonify({"message": "image saved", "data": {}})
+    except:
+        return jsonify({"message": "error", "data": {}})

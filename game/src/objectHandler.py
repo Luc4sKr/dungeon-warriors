@@ -2,6 +2,8 @@ import pygame
 
 from .constants import *
 
+from .ui.slider import Slider
+
 from .spritesheet import Spritesheet
 from .animation import Animation
 from .player import Player
@@ -36,7 +38,9 @@ class ObjectHandler:
 
         self.player = Player(self, player_anim, 5, 100, "assets/sprites/characters/warrior/sprite.png", (0, 0), scale=SCALE)
         self.player_group.add(self.player)
-    
+        self.player_life = Slider(10, 10, 200, 20, PURPLE, self.player.life)
+
+
     def load_enemy(self):
         enemy_idle_spritesheet = Spritesheet("assets/sprites/enemies/demon/idle", 240, SCALE)
 
@@ -73,3 +77,6 @@ class ObjectHandler:
 
         for sprite in self.weapon_group:
             screen.blit(sprite.image, (sprite.rect.topleft + self.camera.offset))
+
+
+        self.player_life.draw(screen)

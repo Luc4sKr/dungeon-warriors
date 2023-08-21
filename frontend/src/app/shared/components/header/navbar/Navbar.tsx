@@ -13,10 +13,10 @@ export const Navbar = () => {
                     <Link to={"/players"} className="link">Players</Link>
                 </li>
                 <li className="navbar-item">
-                    <Link to={"/"} className="link">Register</Link>
+                    <Link to={"/register"} className="link">Register</Link>
                 </li>
                 <li className="navbar-item">
-                    <Link to={"/"} className="link">Login</Link>
+                    <Link to={"/login"} className="link">Login</Link>
                 </li>
             </ul>
         </div>

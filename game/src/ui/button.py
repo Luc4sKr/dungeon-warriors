@@ -3,6 +3,7 @@ import pygame
 from ..utils import *
 from ..constants import *
 
+
 class Button:
     def __init__(self, text, left, top, width, height, callback_function=None, font_size=20, button_color=BLACK, font_color=WHITE, border_color=WHITE, hover_border_color=YELLOW):
         self.left = left

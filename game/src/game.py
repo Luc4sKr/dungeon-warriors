@@ -52,6 +52,6 @@ class Game:
         self.screen.fill(BLACK)
         self.object_handler.draw(self.screen)
 
-        draw_text(self.screen, f"FPS: {self.clock.get_fps():.2f}", 16, WHITE, 5, 5, topleft=True)
+        draw_text(self.screen, f"FPS: {self.clock.get_fps():.2f}", 16, WHITE, 10, 50, topleft=True)
 
         
