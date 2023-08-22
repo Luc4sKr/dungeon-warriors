@@ -20,9 +20,13 @@ class Player(AnimatedEntity):
         self.is_running = False
         self.invert_sprite = False
 
-        self.time = 0
-        self.attack_cooldown = 350
+        self.is_invisible = False
+        self.invisible_time = pygame.time.get_ticks()
+        self.invisible_cooldown = 1000
+
         self.attacking = False
+        self.time_attack = pygame.time.get_ticks()
+        self.attack_cooldown = 350
 
     def input(self):
         keys = pygame.key.get_pressed()
@@ -45,8 +49,8 @@ class Player(AnimatedEntity):
 
         self.move()
 
-        if pygame.mouse.get_pressed()[0] and pygame.time.get_ticks() - self.time > self.attack_cooldown:
-            self.time = pygame.time.get_ticks()
+        if pygame.mouse.get_pressed()[0] and pygame.time.get_ticks() - self.time_attack > self.attack_cooldown:
+            self.time_attack = pygame.time.get_ticks()
             self.attacking = True
             self.weapon.weapon_swing.swing_side *= (-1)
 
@@ -72,11 +76,19 @@ class Player(AnimatedEntity):
 
     def enemy_collide(self):
         for enemy in self.obj_handler.enemy_group:
-            if pygame.sprite.collide_mask(self, enemy):
+            if pygame.sprite.collide_mask(self, enemy) and not self.is_invisible:
                 self.life -= enemy.damage
+                self.is_invisible = True
+
+    def invisible_manager(self):
+        if pygame.time.get_ticks() - self.invisible_time > self.invisible_cooldown and self.is_invisible:
+            self.invisible_time = pygame.time.get_ticks()
+            self.is_invisible = False
+            print("invisivel")
 
     def update(self):
         self.input()
         self.animation_control()
         self.enemy_collide()
+        self.invisible_manager()
 
