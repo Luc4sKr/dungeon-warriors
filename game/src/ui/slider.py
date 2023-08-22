@@ -21,6 +21,6 @@ class Slider:
         pygame.draw.rect(screen, BLACK, self.slider_border)
         pygame.draw.rect(screen, self.color, self.slider)
 
-    def update(self):
-        self.slider = pygame.Rect(int(self.left), int(self.top), int(self.value), int(self.height))
+    def update(self, value):
+        self.slider = pygame.Rect(int(self.left), int(self.top), int((value * self.width) / self.max_value), int(self.height))
 

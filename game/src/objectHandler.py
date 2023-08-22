@@ -38,7 +38,7 @@ class ObjectHandler:
 
         self.player = Player(self, player_anim, 5, 100, "assets/sprites/characters/warrior/sprite.png", (0, 0), scale=SCALE)
         self.player_group.add(self.player)
-        self.player_life = Slider(10, 10, 200, 20, PURPLE, self.player.life)
+        self.player_life_slider = Slider(10, 10, 200, 20, PURPLE, self.player.life)
 
 
     def load_enemy(self):
@@ -57,6 +57,7 @@ class ObjectHandler:
         self.camera.scroll()
 
         self.enemy_spawn.spawn()
+        self.player_life_slider.update(self.player.life)
 
 
     def draw(self, screen):
@@ -79,4 +80,4 @@ class ObjectHandler:
             screen.blit(sprite.image, (sprite.rect.topleft + self.camera.offset))
 
 
-        self.player_life.draw(screen)
+        self.player_life_slider.draw(screen)
