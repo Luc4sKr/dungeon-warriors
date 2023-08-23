@@ -1,8 +1,11 @@
 import pygame
+import requests
 
 from .constants import *
 
 from .ui.slider import Slider
+
+from .models.player_model import PlayerModel
 
 from .spritesheet import Spritesheet
 from .animation import Animation
@@ -36,6 +39,12 @@ class ObjectHandler:
         player_anim.add(PLAYER_IDLE, player_idle_spritesheet)
         player_anim.add(PLAYER_RUN, player_run_spritesheet)
 
+        player_request = requests.get("http://127.0.0.1:5000/player/1")
+        player_model = PlayerModel(**player_request.json()["data"])
+        
+        print(player_request.json()["data"])
+        print(player_model)
+        
         self.player = Player(self, player_anim, 5, 100, "assets/sprites/characters/warrior/sprite.png", (0, 0), scale=SCALE)
         self.player_group.add(self.player)
         self.player_life_slider = Slider(10, 10, 200, 20, PURPLE, self.player.life)
