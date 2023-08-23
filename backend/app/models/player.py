@@ -13,6 +13,9 @@ class Player(db.Model):
 
     max_score = db.Column(db.Integer, nullable=False)
     coins = db.Column(db.Integer, nullable=False)
+    life = db.Column(db.Integer, nullable=False)
+    strength = db.Column(db.Integer, nullable=False)
+    speed = db.Column(db.Integer, nullable=False)
 
     weapon_id = db.Column(db.Integer, db.ForeignKey(Weapon.id), nullable=False)
     weapon = db.relationship("Weapon", backref="weapon")
@@ -26,8 +29,13 @@ class PlayerSchema(ma.Schema):
     email = fields.Str()
     password = fields.Str()
     created_on = fields.DateTime()
+
     max_score = fields.Integer()
     coins = fields.Integer()
+    life = fields.Integer()
+    strength = fields.Integer()
+    speed = fields.Integer()
+
     weapon = fields.Nested(WeaponSchema())
 
 player_schema = PlayerSchema()

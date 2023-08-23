@@ -10,6 +10,10 @@ def get_players():
 def get_player(id):
     return player.get_player(id)
 
+@app.route("/player", methods=["POST"])
+def post_player():
+    return player.post_player()
+
 @app.route("/player/register", methods=["POST"])
 def register_player():
     return player.register()
