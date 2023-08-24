@@ -46,7 +46,6 @@ class ObjectHandler:
         self.player_group.add(self.player)
         self.player_life_slider = Slider(10, 10, 200, 20, PURPLE, self.player.life)
 
-
     def load_enemy(self):
         enemy_idle_spritesheet = Spritesheet("assets/sprites/enemies/demon/idle", 240, SCALE)
 
@@ -62,9 +61,8 @@ class ObjectHandler:
         self.enemy_group.update()
         self.camera.scroll()
 
-        self.enemy_spawn.spawn()
+        self.enemy_spawn.check_enemies()
         self.player_life_slider.update(self.player.life)
-
 
     def draw(self, screen):
         for sprite in self.wall_sprites:
@@ -86,5 +84,6 @@ class ObjectHandler:
             screen.blit(sprite.image, (sprite.rect.topleft + self.camera.offset))
 
 
-        self.player_life_slider.draw(screen)
         self.player.draw_username(screen)
+        self.player_life_slider.draw(screen)
+        

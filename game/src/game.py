@@ -20,8 +20,7 @@ class Game:
         self.game_over = False
 
     def start(self):
-        #self.main_menu.run()
-        self.new_game()
+        self.main_menu.run()
 
     def new_game(self, map=1):
         self.game_over = False
@@ -53,5 +52,6 @@ class Game:
         self.object_handler.draw(self.screen)
 
         draw_text(self.screen, f"FPS: {self.clock.get_fps():.2f}", 16, WHITE, 10, 50, topleft=True)
+        draw_text(self.screen, f"Score: {self.object_handler.player.model.max_score}", 16, WHITE, 10, 70, topleft=True)
 
         

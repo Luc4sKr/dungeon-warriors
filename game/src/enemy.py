@@ -33,5 +33,7 @@ class Enemy(AnimatedEntity):
             self.is_dead = True
             self.kill()
 
+            self.obj_handler.player.model.max_score += 1
+
     def update(self):
         self.animation_control()

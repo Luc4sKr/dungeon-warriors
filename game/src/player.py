@@ -14,7 +14,7 @@ class Player(AnimatedEntity):
         self.obj_handler = obj_handler
         self.model = model
 
-        self.weapon = Weapon(self.obj_handler, self, self.model.weapon.name, self.model.weapon.damage)
+        self.weapon = Weapon(self.obj_handler, self, self.model.weapon.name.lower(), self.model.weapon.damage)
         self.obj_handler.weapon_group.add(self.weapon)
 
         self.direction = pygame.math.Vector2(0, 0)
