@@ -6,6 +6,7 @@ class Weapon(db.Model):
     name = db.Column(db.String(50), unique=True, nullable=False)
     #image_path = db.Column(db.String(120), unique=True, nullable=False)
     damage = db.Column(db.Integer, nullable=False)
+    # attack_speed = ...
 
 
 class WeaponSchema(ma.Schema):
