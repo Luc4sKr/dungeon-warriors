@@ -1,3 +1,5 @@
+from .weapon_model import WeaponModel
+
 class PlayerModel:
     def __init__(self, id, username, email, password, created_on, max_score, coins, life, strength, speed, weapon):
         self.id = id
@@ -12,4 +14,4 @@ class PlayerModel:
         self.strength = strength
         self.speed = speed
 
-        self.weapon = weapon
+        self.weapon = WeaponModel(**weapon)

@@ -42,10 +42,7 @@ class ObjectHandler:
         player_request = requests.get("http://127.0.0.1:5000/player/1")
         player_model = PlayerModel(**player_request.json()["data"])
         
-        print(player_request.json()["data"])
-        print(player_model)
-        
-        self.player = Player(self, player_anim, 5, 100, "assets/sprites/characters/warrior/sprite.png", (0, 0), scale=SCALE)
+        self.player = Player(self, player_anim, player_model, "assets/sprites/characters/warrior/sprite.png", (0, 0), scale=SCALE)
         self.player_group.add(self.player)
         self.player_life_slider = Slider(10, 10, 200, 20, PURPLE, self.player.life)
 
@@ -90,3 +87,4 @@ class ObjectHandler:
 
 
         self.player_life_slider.draw(screen)
+        self.player.draw_username(screen)

@@ -74,15 +74,14 @@ class Weapon(pygame.sprite.Sprite):
         for enemy in self.obj_handler.enemy_group:
             if (
                     pygame.sprite.collide_mask(self.player.weapon, enemy)
-                    and enemy.dead is False
-                    #and enemy.can_get_hurt_from_weapon()
+                    and enemy.is_dead is False
             ):
                 #self.player.weapon.special_effect(enemy)
-                enemy.hurt = True
                 enemy.life -= self.player.weapon.damage #* self.game.player.strength
                 #enemy.entity_animation.hurt_timer = pygame.time.get_ticks()
                 #self.game.sound_manager.play_hit_sound()
                 #enemy.weapon_hurt_cooldown = pygame.time.get_ticks()
+                enemy.check_death()
 
     def update(self):
         if self.weapon_swing.counter == 10:

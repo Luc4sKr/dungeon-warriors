@@ -28,5 +28,10 @@ class Enemy(AnimatedEntity):
     def animation_control(self):
         self.animation.select(ENEMY_IDLE)
 
+    def check_death(self):
+        if self.life <= 0:
+            self.is_dead = True
+            self.kill()
+
     def update(self):
         self.animation_control()

@@ -16,7 +16,7 @@ class Entity(pygame.sprite.Sprite):
         self.rect.center = pos
         self.speed = speed
         self.life = life
-        self.dead = False
+        self.is_dead = False
 
     def wall_collision(self, direction):
         for wall in self.obj_handler.wall_sprites:

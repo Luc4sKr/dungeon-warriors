@@ -1,19 +1,22 @@
 import pygame
 
+from .utils import *
 from .constants import *
+
 from .entity import AnimatedEntity
 from .weapon import Weapon
 
 
 class Player(AnimatedEntity):
-    def __init__(self, obj_handler, animation, speed, life, image, pos: tuple, scale=SCALE) -> None:
-        super().__init__(obj_handler, animation, image, pos, speed, life, scale)
+    def __init__(self, obj_handler, animation, model, image, pos: tuple, scale=SCALE) -> None:
+        super().__init__(obj_handler, animation, image, pos, speed=model.speed, life=model.life, scale=scale)
 
         self.obj_handler = obj_handler
-        self.weapon = Weapon(self.obj_handler, self, "sword", 10)
+        self.model = model
+
+        self.weapon = Weapon(self.obj_handler, self, self.model.weapon.name, self.model.weapon.damage)
         self.obj_handler.weapon_group.add(self.weapon)
 
-        self.speed = speed
         self.direction = pygame.math.Vector2(0, 0)
         self.pos = pygame.math.Vector2(pos)
 
@@ -60,10 +63,10 @@ class Player(AnimatedEntity):
             self.direction = self.direction.normalize()
             self.is_running = True
 
-        self.rect.x += self.direction.x * self.speed
+        self.rect.x += self.direction.x * self.model.speed
         super().wall_collision("horizontal")
 
-        self.rect.y += self.direction.y * self.speed
+        self.rect.y += self.direction.y * self.model.speed
         super().wall_collision("vertical")
 
     def animation_control(self):
@@ -84,7 +87,10 @@ class Player(AnimatedEntity):
         if pygame.time.get_ticks() - self.invisible_time > self.invisible_cooldown and self.is_invisible:
             self.invisible_time = pygame.time.get_ticks()
             self.is_invisible = False
-            print("invisivel")
+
+    def draw_username(self, screen):
+        text = return_text(self.model.username, 12, WHITE, self.rect.centerx, self.rect.top)
+        screen.blit(text[0], (text[1].topleft + self.obj_handler.camera.offset))
 
     def update(self):
         self.input()
