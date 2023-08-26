@@ -1,5 +1,7 @@
 import pygame
 import requests
+import pickle
+import os
 
 from .constants import *
 
@@ -41,6 +43,13 @@ class ObjectHandler:
 
         player_request = requests.get("http://127.0.0.1:5000/player/1")
         player_model = PlayerModel(**player_request.json()["data"])
+
+        """
+        print(f"{os.getcwd()}/bin/")
+        with open(os.path.join(os.getcwd() + "/bin", "player_model.pkl"), "wb") as file:
+            pickle.dump(player_model, file)
+            print("foi")
+        """
         
         self.player = Player(self, player_anim, player_model, "assets/sprites/characters/warrior/sprite.png", (0, 0), scale=SCALE)
         self.player_group.add(self.player)

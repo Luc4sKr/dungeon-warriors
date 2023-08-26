@@ -128,4 +128,19 @@ class SelectMapMenu(Menu):
         self.show_menu = False
         self.game.new_game(self.selected_map)
 
-    
+
+class LoginMenu(Menu):
+    def __init__(self, game) -> None:
+        super().__init__(game)
+        self.click = False
+
+    def menu_events(self, event):
+        pass
+
+    def update(self):
+        super().update()
+
+    def draw(self):
+        super().draw()
+
+        draw_text(self.game.screen, "Login", TITLE_FONT, WHITE, HALF_WIDTH, 50)
