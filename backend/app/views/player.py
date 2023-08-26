@@ -9,15 +9,16 @@ def get_players():
 
     if players:
         result = players_schema.dump(players)
-        return jsonify({"message": "successfully fetched", "data": result})
-    return jsonify({"message": "nothing found", "data": {}})
+        return jsonify({"message": "successfully fetched", "data": result}), 200
+    return jsonify({"message": "nothing found", "data": {}}), 404
 
 def get_player(id):
     player = Player.query.get(id)
 
     if player:
         result = player_schema.dump(player)
-        return jsonify({"message": "sucessfully fetched", "data": result}), 201
+        return jsonify({"message": "sucessfully fetched", "data": result}), 200
+    return jsonify({"message": "nothing found", "data": {}}), 404
 
 def post_player():
     data = request.get_json()
@@ -28,28 +29,19 @@ def post_player():
         db.session.add(player)
         db.session.commit()
         result = player_schema.dump(player)
-
         return jsonify({"message": "successfully registered", "data": result}), 201
-
     except:
         return jsonify({"message": "unable to create", "data": {}}), 500
     
 def register():
     data = request.get_json()
 
-    print(data)
-
-    data["password"] = generate_password_hash(data["password"])
-    
     username = data["username"]
     email = data["email"]
     password = generate_password_hash(data["password"])
-    max_socre = 0
-    coins = 0
-    weapon_id = data["weapon_id"]
 
     try:
-        player = Player(username=username, email=email, password=password, max_score=max_socre, coins=coins, weapon_id=weapon_id)
+        player = Player(username=username, email=email, password=password)
         db.session.add(player)
         db.session.commit()
         result = player_schema.dump(player)

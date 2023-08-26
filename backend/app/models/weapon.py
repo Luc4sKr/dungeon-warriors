@@ -1,4 +1,5 @@
-from app import db, ma, fields
+from app import db, ma
+from marshmallow import fields
 
 
 class Weapon(db.Model):

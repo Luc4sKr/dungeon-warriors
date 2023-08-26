@@ -3,7 +3,6 @@ from flask_cors import CORS
 from flask_sqlalchemy import SQLAlchemy
 from flask_marshmallow import Marshmallow
 from flask_migrate import Migrate
-from marshmallow import fields
 
 from flask_jwt_extended import create_access_token
 from flask_jwt_extended import get_jwt_identity
@@ -22,6 +21,7 @@ migrate = Migrate(app, db)
 
 from .models.weapon import Weapon
 from .models.player import Player
+from .models.character import Character 
 
 from .models import *
 from .views import *
