@@ -8,13 +8,14 @@ from .weapon import Weapon
 
 
 class Player(AnimatedEntity):
-    def __init__(self, obj_handler, animation, model, image, pos: tuple, scale=SCALE) -> None:
-        super().__init__(obj_handler, animation, image, pos, speed=model.speed, life=model.life, scale=scale)
+    def __init__(self, obj_handler, animation, model, character, image, pos: tuple, scale=SCALE) -> None:
+        super().__init__(obj_handler, animation, image, pos, speed=character.speed, life=character.life, scale=scale)
 
         self.obj_handler = obj_handler
         self.model = model
+        self.character = character
 
-        self.weapon = Weapon(self.obj_handler, self, self.model.weapon.name.lower(), self.model.weapon.damage)
+        self.weapon = Weapon(self.obj_handler, self, self.character.weapon.name.lower(), self.character.weapon.damage)
         self.obj_handler.weapon_group.add(self.weapon)
 
         self.direction = pygame.math.Vector2(0, 0)
@@ -63,10 +64,10 @@ class Player(AnimatedEntity):
             self.direction = self.direction.normalize()
             self.is_running = True
 
-        self.rect.x += self.direction.x * self.model.speed
+        self.rect.x += self.direction.x * self.speed
         super().wall_collision("horizontal")
 
-        self.rect.y += self.direction.y * self.model.speed
+        self.rect.y += self.direction.y * self.speed
         super().wall_collision("vertical")
 
     def animation_control(self):
@@ -89,8 +90,8 @@ class Player(AnimatedEntity):
             self.is_invisible = False
 
     def draw_username(self, screen):
-        text = return_text(self.model.username, 12, WHITE, self.rect.centerx, self.rect.top)
-        screen.blit(text[0], (text[1].topleft + self.obj_handler.camera.offset))
+        self.name_text = return_text(self.model.username, 12, WHITE, self.rect.centerx, self.rect.top)
+        screen.blit(self.name_text[0], (self.name_text[1].topleft + self.obj_handler.camera.offset))
 
     def update(self):
         self.input()
