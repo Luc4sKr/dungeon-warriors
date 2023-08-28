@@ -173,3 +173,35 @@ class GameOverMenu(Menu):
         self.show_menu = False
         mainmenu = MainMenu(self.game)
         mainmenu.run()
+
+
+class PauseMenu(Menu):
+    def __init__(self, game) -> None:
+        super().__init__(game)
+        self.click = False
+
+        self.back_to_game = Button("BACK TO MENU", HALF_WIDTH - 100, 300, 200, 50, callback_function=self.back_to_menu)
+        self.back_to_menu_btn = Button("BACK TO MENU", HALF_WIDTH - 100, 300, 200, 50, callback_function=self.back_to_menu)
+
+    def menu_events(self, event):
+        pass
+
+    def update(self):
+        self.back_to_menu_btn.update(self.click)
+
+        super().update()
+
+    def draw(self):
+        super().draw()
+
+        self.back_to_menu_btn.draw(self.game.screen)
+
+        draw_text(self.game.screen, "Pause", TITLE_FONT, WHITE, HALF_WIDTH, 50)
+
+    def back_to_game(self):
+        pass
+
+    def back_to_menu(self):
+        self.show_menu = False
+        mainmenu = MainMenu(self.game)
+        mainmenu.run()
