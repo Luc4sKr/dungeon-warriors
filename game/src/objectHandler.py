@@ -17,7 +17,9 @@ from .camera import Camera
 from .enemy_spawn import EnemySpawn
 
 class ObjectHandler:
-    def __init__(self) -> None:
+    def __init__(self, game) -> None:
+        self.game = game
+
         self.load_groups()
         self.load_player()
         self.load_enemy()

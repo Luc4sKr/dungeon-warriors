@@ -6,6 +6,8 @@ from .constants import *
 from .entity import AnimatedEntity
 from .weapon import Weapon
 
+from .menu import GameOverMenu
+
 
 class Player(AnimatedEntity):
     def __init__(self, obj_handler, animation, model, character, image, pos: tuple, scale=SCALE) -> None:
@@ -89,6 +91,13 @@ class Player(AnimatedEntity):
             self.invisible_time = pygame.time.get_ticks()
             self.is_invisible = False
 
+    def check_death(self):
+        if self.life <= 0:
+            self.is_dead = True
+            self.obj_handler.game.game_over = True
+            self.game_over_menu = GameOverMenu(self.obj_handler.game)
+            self.game_over_menu.run()
+
     def draw_username(self, screen):
         self.name_text = return_text(self.model.username, 12, WHITE, self.rect.centerx, self.rect.top)
         screen.blit(self.name_text[0], (self.name_text[1].topleft + self.obj_handler.camera.offset))
@@ -97,5 +106,6 @@ class Player(AnimatedEntity):
         self.input()
         self.animation_control()
         self.enemy_collide()
+        self.check_death()
         self.invisible_manager()
 

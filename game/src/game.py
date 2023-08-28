@@ -24,7 +24,7 @@ class Game:
 
     def new_game(self, map=1):
         self.game_over = False
-        self.object_handler = ObjectHandler()
+        self.object_handler = ObjectHandler(self)
         self.map = Map(self.object_handler, map)
 
         self.run()
