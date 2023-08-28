@@ -8,6 +8,7 @@ from .constants import *
 from .ui.slider import Slider
 
 from .models.player_model import PlayerModel
+from .models.character_model import CharacterModel
 
 from .spritesheet import Spritesheet
 from .animation import Animation
@@ -44,6 +45,9 @@ class ObjectHandler:
         player_request = requests.get("http://127.0.0.1:5000/player/1")
         player_model = PlayerModel(**player_request.json()["data"])
 
+        character_request = requests.get("http://127.0.0.1:5000/character/1")
+        character_mdoel = CharacterModel(**character_request.json()["data"])
+
         """
         print(f"{os.getcwd()}/bin/")
         with open(os.path.join(os.getcwd() + "/bin", "player_model.pkl"), "wb") as file:
@@ -51,7 +55,7 @@ class ObjectHandler:
             print("foi")
         """
         
-        self.player = Player(self, player_anim, player_model, "assets/sprites/characters/warrior/sprite.png", (0, 0), scale=SCALE)
+        self.player = Player(self, player_anim, player_model, character_mdoel, "assets/sprites/characters/warrior/sprite.png", (0, 0), scale=SCALE)
         self.player_group.add(self.player)
         self.player_life_slider = Slider(10, 10, 200, 20, PURPLE, self.player.life)
 
@@ -93,6 +97,6 @@ class ObjectHandler:
             screen.blit(sprite.image, (sprite.rect.topleft + self.camera.offset))
 
 
-        self.player.draw_username(screen)
+        #self.player.draw_username(screen)
         self.player_life_slider.draw(screen)
         
