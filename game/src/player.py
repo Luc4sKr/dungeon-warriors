@@ -93,6 +93,7 @@ class Player(AnimatedEntity):
 
     def check_death(self):
         if self.life <= 0:
+            self.model.save_data()
             self.is_dead = True
             self.obj_handler.game.game_over = True
             self.game_over_menu = GameOverMenu(self.obj_handler.game)

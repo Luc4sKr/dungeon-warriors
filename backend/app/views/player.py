@@ -62,3 +62,17 @@ def login():
         return jsonify({"message": "login successfully", "data": access_token})
 
     return jsonify({"message": "incorrect username or password"})
+
+def update_player(id):
+    player_obj = Player.query.filter_by(id=id).first()
+    body = request.get_json()
+
+    try:
+        if ("max_score" in body):
+            player_obj.max_score = body["max_score"]
+
+        db.session.add(player_obj)
+        db.session.commit()
+        return jsonify({"message": "player updated", "data": player_schema.dump(player_obj)})
+    except Exception as e:
+        return jsonify({"message": "error" + e, "data": {}})
