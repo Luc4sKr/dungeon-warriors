@@ -14,5 +14,5 @@ export type PlayerRegister = {
     username: string,
     email: string,
     password: string,
-    image: File | null
+    profile_image_url: string
 }

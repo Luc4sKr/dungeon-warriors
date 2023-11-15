@@ -2,22 +2,33 @@ import { useState, FormEvent, ChangeEvent } from "react"
 import { Form, FormDiv, FormWrapper, SelectedImage } from "./Register.style";
 import { Button, TextField } from "@mui/material";
 import { PlayerRegister } from "../../shared/models/player";
-import { register } from "../../shared/services/player_api";
+import { register, save_profile_image } from "../../shared/services/player_api";
 
 export const Register = () => {
+    const [profileImage, setProfileImage] = useState<File>({} as File);
     const [formData, setFormData] = useState<PlayerRegister>({
         username: "",
         email: "",
         password: "",
-        image: null,
+        profile_image_url: "",
     });
 
     const onSubmitForm = async (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
+        
+        await save_profile_image(profileImage)
+            .then(resp => {
 
-        console.log(formData)
+                setFormData({
+                    ...formData,
+                    profile_image_url: resp.data
+                });
 
-        register(formData);
+                register(formData)
+                    .then(resp => {
+                        console.log(resp)
+                    });
+            });
     }
 
     const handleInput = (event: ChangeEvent<HTMLInputElement>) => {
@@ -30,19 +41,15 @@ export const Register = () => {
     }
 
     const handleImage = (event: ChangeEvent<HTMLInputElement>) => {
-        const fieldName = event.target.name;
+        //const fieldName = event.target.name;
         const files = event.target.files;
 
         if (files && files.length > 0) {
             const selectedImage = files[0];
 
-            setFormData({
-                ...formData,
-                [fieldName]: selectedImage,
-            });
+            setProfileImage(selectedImage);
         }
     };
-
 
     return (
         <FormWrapper>
@@ -95,8 +102,8 @@ export const Register = () => {
                         Upload Profile Image
                         <input
                             type='file'
-                            id='image'
-                            name='image'
+                            id='profile_image'
+                            name='profile_image'
                             onChange={handleImage}
                             accept='image/*'
                             key={Math.random()}
@@ -104,11 +111,11 @@ export const Register = () => {
                         />
                     </Button>
 
-                    {formData.image && (
+                    {profileImage.size != undefined && (
                         <SelectedImage>
                             <p style={{ color: "rgba(0, 0, 0, 0.6)" }}>Selected Image:</p>
                             <img
-                                src={URL.createObjectURL(formData.image)}
+                                src={URL.createObjectURL(profileImage)}
                                 alt="Selected"
                                 style={{ width: "100%" }}
                             />
