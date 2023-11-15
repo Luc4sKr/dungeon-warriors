@@ -1,21 +1,43 @@
 import { useState, FormEvent, ChangeEvent } from "react"
-import { Form, FormDiv } from "./Register.style";
+import { Form, FormDiv, FormWrapper, FormLabel, SelectedImage } from "./Register.style";
+import { Button, TextField } from "@mui/material";
+
+interface FormData {
+    username: string;
+    email: string;
+    password: string;
+    image: File | null;
+}
 
 export const Register = () => {
+    const [formData, setFormData] = useState<FormData>({
+        username: "",
+        email: "",
+        password: "",
+        image: null,
+    });
+
     const [image, setImage] = useState<File | null>(null);
 
-    const uploadImage = (e: FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
+    const onSubmitForm = (event: FormEvent<HTMLFormElement>) => {
+        event.preventDefault();
 
-        if (!image) {
-            alert('Por favor, selecione uma imagem antes de enviar.');
-            return;
-        }
-
-        console.log("imagem")
+        console.log(formData)
     }
 
-    const handleImageChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const handleUsername = (event: ChangeEvent<HTMLInputElement>) => {
+        console.log(event)
+        const fieldName = event.target.name;
+        
+        setFormData({
+            ...formData,
+            [fieldName]: event.target.value,
+        });
+
+        console.log(fieldName)
+    }
+
+    const handleImage = (event: ChangeEvent<HTMLInputElement>) => {
         const files = event.target.files;
 
         if (files && files.length > 0) {
@@ -24,32 +46,53 @@ export const Register = () => {
         }
     };
 
+
     return (
-        <Form onSubmit={uploadImage}>
-            <FormDiv>
-                <label htmlFor="image">Imagem: </label>
-                <input
-                    type='file'
-                    id='image'
-                    name='image'
-                    onChange={handleImageChange}
-                    accept='image/*'
-                    key={Math.random()}
-                />
+        <FormWrapper>
+            <Form onSubmit={onSubmitForm}>
+                <FormDiv>
+                    <TextField
+                        type="text"
+                        label="Username"
+                        variant="standard"
+                        id="username"
+                        name="username"
+                        value={formData.username}
+                        onChange={handleUsername}
+                    />
+                </FormDiv>
 
-                {image && (
-                    <div>
-                        <p>Selected Image:</p>
-                        <img
-                            src={URL.createObjectURL(image)}
-                            alt="Selected"
-                            style={{ maxWidth: '100px' }}
+                <FormDiv>
+                    <Button
+                        variant="contained"
+                        component="label"
+                    >
+                        Upload File
+                        <input
+                            type='file'
+                            id='image'
+                            name='image'
+                            onChange={handleImage}
+                            accept='image/*'
+                            key={Math.random()}
+                            hidden
                         />
-                    </div>
-                )}
-            </FormDiv>
+                    </Button>
 
-            <button type='submit'>Salvar</button>
-        </Form>
+                    {image && (
+                        <SelectedImage>
+                            <p>Selected Image:</p>
+                            <img
+                                src={URL.createObjectURL(image)}
+                                alt="Selected"
+                                style={{ width: "100%" }}
+                            />
+                        </SelectedImage>
+                    )}
+                </FormDiv>
+
+                <button type='submit'>Salvar</button>
+            </Form>
+        </FormWrapper>
     )
 }
