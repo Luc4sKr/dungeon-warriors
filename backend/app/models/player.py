@@ -8,6 +8,7 @@ class Player(db.Model):
     username = db.Column(db.String(20), unique=True, nullable=False)
     email = db.Column(db.String(60), unique=True, nullable=False)
     password = db.Column(db.String(200), nullable=False)
+    profile_image = db.Column(db.Text, nullable=True)
     
     created_on = db.Column(db.DateTime, default=datetime.datetime.now())
     max_score = db.Column(db.Integer, nullable=False, default=0)
@@ -21,6 +22,7 @@ class PlayerSchema(ma.Schema):
     username = fields.Str()
     email = fields.Str()
     password = fields.Str()
+    image = fields.Str()
     
     created_on = fields.DateTime()
     max_score = fields.Integer()

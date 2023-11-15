@@ -14,6 +14,18 @@ def get_player(id):
 def post_player():
     return player.post_player()
 
+@app.route("/player/<id>", methods=["PUT"])
+def update_player(id):
+    return player.update_player(id)
+
+@app.route("/player/<id>", methods=["DELETE"])
+def delete_player(id):
+    return player.delete_player(id)
+
+@app.route("/player/save_profile_image", methods=["POST"])
+def save_profile_image():
+    return player.save_profile_image()
+
 @app.route("/player/register", methods=["POST"])
 def register_player():
     return player.register()
@@ -21,7 +33,3 @@ def register_player():
 @app.route("/player/login", methods=["POST"])
 def login_player():
     return player.login()
-
-@app.route("/player/<id>", methods=["PUT"])
-def update_player(id):
-    return player.update_player(id)

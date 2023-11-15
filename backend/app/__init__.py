@@ -1,3 +1,4 @@
+import os
 from flask import Flask
 from flask_cors import CORS
 from flask_sqlalchemy import SQLAlchemy
@@ -18,6 +19,8 @@ jwt = JWTManager(app)
 ma = Marshmallow(app)
 
 migrate = Migrate(app, db)
+
+APP_PATH = os.path.dirname(f"{os.path.abspath(__file__)}")
 
 from .models.weapon import Weapon
 from .models.player import Player
