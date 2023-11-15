@@ -1,48 +1,45 @@
 import { useState, FormEvent, ChangeEvent } from "react"
-import { Form, FormDiv, FormWrapper, FormLabel, SelectedImage } from "./Register.style";
+import { Form, FormDiv, FormWrapper, SelectedImage } from "./Register.style";
 import { Button, TextField } from "@mui/material";
-
-interface FormData {
-    username: string;
-    email: string;
-    password: string;
-    image: File | null;
-}
+import { PlayerRegister } from "../../shared/models/player";
+import { register } from "../../shared/services/player_api";
 
 export const Register = () => {
-    const [formData, setFormData] = useState<FormData>({
+    const [formData, setFormData] = useState<PlayerRegister>({
         username: "",
         email: "",
         password: "",
         image: null,
     });
 
-    const [image, setImage] = useState<File | null>(null);
-
-    const onSubmitForm = (event: FormEvent<HTMLFormElement>) => {
+    const onSubmitForm = async (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
 
         console.log(formData)
+
+        register(formData);
     }
 
-    const handleUsername = (event: ChangeEvent<HTMLInputElement>) => {
-        console.log(event)
+    const handleInput = (event: ChangeEvent<HTMLInputElement>) => {
         const fieldName = event.target.name;
-        
+
         setFormData({
             ...formData,
             [fieldName]: event.target.value,
         });
-
-        console.log(fieldName)
     }
 
     const handleImage = (event: ChangeEvent<HTMLInputElement>) => {
+        const fieldName = event.target.name;
         const files = event.target.files;
 
         if (files && files.length > 0) {
             const selectedImage = files[0];
-            setImage(selectedImage);
+
+            setFormData({
+                ...formData,
+                [fieldName]: selectedImage,
+            });
         }
     };
 
@@ -51,6 +48,10 @@ export const Register = () => {
         <FormWrapper>
             <Form onSubmit={onSubmitForm}>
                 <FormDiv>
+                    <h1 style={{ textAlign: "center" }}>Register</h1>
+                </FormDiv>
+
+                <FormDiv>
                     <TextField
                         type="text"
                         label="Username"
@@ -58,7 +59,31 @@ export const Register = () => {
                         id="username"
                         name="username"
                         value={formData.username}
-                        onChange={handleUsername}
+                        onChange={handleInput}
+                    />
+                </FormDiv>
+
+                <FormDiv>
+                    <TextField
+                        type="email"
+                        label="Email"
+                        variant="standard"
+                        id="email"
+                        name="email"
+                        value={formData.email}
+                        onChange={handleInput}
+                    />
+                </FormDiv>
+
+                <FormDiv>
+                    <TextField
+                        type="password"
+                        label="Password"
+                        variant="standard"
+                        id="password"
+                        name="password"
+                        value={formData.password}
+                        onChange={handleInput}
                     />
                 </FormDiv>
 
@@ -67,7 +92,7 @@ export const Register = () => {
                         variant="contained"
                         component="label"
                     >
-                        Upload File
+                        Upload Profile Image
                         <input
                             type='file'
                             id='image'
@@ -79,11 +104,11 @@ export const Register = () => {
                         />
                     </Button>
 
-                    {image && (
+                    {formData.image && (
                         <SelectedImage>
-                            <p>Selected Image:</p>
+                            <p style={{ color: "rgba(0, 0, 0, 0.6)" }}>Selected Image:</p>
                             <img
-                                src={URL.createObjectURL(image)}
+                                src={URL.createObjectURL(formData.image)}
                                 alt="Selected"
                                 style={{ width: "100%" }}
                             />
@@ -91,7 +116,14 @@ export const Register = () => {
                     )}
                 </FormDiv>
 
-                <button type='submit'>Salvar</button>
+                <FormDiv>
+                    <Button
+                        type="submit"
+                        variant="contained"
+                    >
+                        Send
+                    </Button>
+                </FormDiv>
             </Form>
         </FormWrapper>
     )

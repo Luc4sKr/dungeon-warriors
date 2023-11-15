@@ -9,3 +9,10 @@ export type Player = {
 export type GetPlayerResponse = {
     data: Player[];
 }
+
+export type PlayerRegister = {
+    username: string,
+    email: string,
+    password: string,
+    image: File | null
+}
