@@ -1,4 +1,4 @@
-import { useState, FormEvent, ChangeEvent } from "react"
+import { useState, FormEvent, ChangeEvent, useEffect } from "react"
 import { Form, FormDiv, FormWrapper, SelectedImage } from "./Register.style";
 import { Button, TextField } from "@mui/material";
 import { PlayerRegister } from "../../shared/models/player";
@@ -13,21 +13,32 @@ export const Register = () => {
         profile_image_url: "",
     });
 
+    useEffect(() => {
+        console.log(formData)
+    }, [formData])
+
     const onSubmitForm = async (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-        
-        await save_profile_image(profileImage)
+
+        const resp = await save_profile_image(profileImage);
+
+        if (resp) {
+            console.log(resp)
+
+            setFormData({
+                ...formData,
+                profile_image_url: resp.data
+            });
+
+            formData.profile_image_url = resp.data
+        }
+
+        console.log("antes register")
+        console.log(formData)
+
+        await register(formData)
             .then(resp => {
-
-                setFormData({
-                    ...formData,
-                    profile_image_url: resp.data
-                });
-
-                register(formData)
-                    .then(resp => {
-                        console.log(resp)
-                    });
+                console.log(resp)
             });
     }
 
@@ -41,12 +52,10 @@ export const Register = () => {
     }
 
     const handleImage = (event: ChangeEvent<HTMLInputElement>) => {
-        //const fieldName = event.target.name;
         const files = event.target.files;
 
         if (files && files.length > 0) {
             const selectedImage = files[0];
-
             setProfileImage(selectedImage);
         }
     };

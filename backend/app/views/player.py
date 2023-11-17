@@ -1,6 +1,6 @@
 import os
-import secrets
-from flask import request, jsonify
+import uuid
+from flask import request, jsonify, send_file
 from app import APP_PATH, db, create_access_token
 from ..models.player import Player, player_schema, players_schema
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -53,8 +53,6 @@ def update_player(id):
 def delete_player(id):
     player_obj = Player.query.filter_by(id=id).first()
 
-    print(player_obj)
-
     if player_obj == None:
         return jsonify({"message": "not found", "data": {}}), 404
     
@@ -67,24 +65,36 @@ def delete_player(id):
         db.session.rollback()
         return jsonify({"message": "Error deleting player", "data": {}}), 500
     
-
 def save_profile_image():
     if "profile_image" not in request.files:
         return jsonify({"message": f"No files sent:", "data": {}}), 400
     
     try:
         file = request.files["profile_image"]
-
-        random_name = secrets.token_hex(8)
+        random_name = str(uuid.uuid4())
         file_extension = os.path.splitext(file.filename)[1]
         filename = f"{random_name}{file_extension}"
-        file_path = f"{APP_PATH}/img/{filename}"
+        image_path = f"img/profile/{filename}"
+        file_path = f"{APP_PATH}/{image_path}"
+
+        print(image_path)
+        print(file_path)
 
         file.save(file_path)
-        return jsonify({"message": "successfully save image", "data": filename}), 201
+        return jsonify({"message": "successfully save image", "data": image_path}), 201
     
     except Exception as e:
-        return jsonify({"message": f"erro: {e}", "data": {}}), 400
+        return jsonify({"message": f"erro: {e}", "data": {}})
+
+def get_profile_image(player_id):
+    player_obj = Player.query.filter_by(id=player_id).first()
+
+    print(player_obj)
+
+    if player_obj:
+        path = f"{APP_PATH}/{player_obj.profile_image}"
+        print(path)
+        return send_file(path, mimetype='image/gif')
 
 def register():
     data = request.get_json()
@@ -94,12 +104,14 @@ def register():
     username = data["username"]
     email = data["email"]
     password = generate_password_hash(data["password"])
-    profile_image = data["profile_image_url"]
+    profile_image_url = data["profile_image_url"]
+
+    print(profile_image_url)
 
     try:
-        player = Player(username=username, email=email, password=password, profile_image=profile_image)
+        player = Player(username=username, email=email, password=password, profile_image=profile_image_url)
         db.session.add(player)
-        db.session.commit()
+        #db.session.commit()
         result = player_schema.dump(player)
         return jsonify({"message": "successfully registered", "data": result}), 201
     

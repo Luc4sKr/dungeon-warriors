@@ -17,7 +17,6 @@ export async function save_profile_image(profile_image: File) {
 }
 
 export async function register(player_register: PlayerRegister) {
-    console.log(player_register)
     try {
         const response = await api.post("/player/register", player_register);
         return response.data;

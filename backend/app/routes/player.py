@@ -6,7 +6,7 @@ from ..views import player
 def get_players():
     return player.get_players()
 
-@app.route("/player/<id>", methods=["GET"])
+@app.route("/player/<int:id>", methods=["GET"])
 def get_player(id):
     return player.get_player(id)
 
@@ -14,7 +14,7 @@ def get_player(id):
 def post_player():
     return player.post_player()
 
-@app.route("/player/<id>", methods=["PUT"])
+@app.route("/player/<int:id>", methods=["PUT"])
 def update_player(id):
     return player.update_player(id)
 
@@ -25,6 +25,10 @@ def delete_player(id):
 @app.route("/player/save_profile_image", methods=["POST"])
 def save_profile_image():
     return player.save_profile_image()
+
+@app.route("/player/get_profile_image/<int:player_id>", methods=["GET"])
+def get_profile_image(player_id):
+    return player.get_profile_image(player_id)
 
 @app.route("/player/register", methods=["POST"])
 def register_player():

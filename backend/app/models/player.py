@@ -22,7 +22,7 @@ class PlayerSchema(ma.Schema):
     username = fields.Str()
     email = fields.Str()
     password = fields.Str()
-    image = fields.Str()
+    profile_image = fields.Str()
     
     created_on = fields.DateTime()
     max_score = fields.Integer()
