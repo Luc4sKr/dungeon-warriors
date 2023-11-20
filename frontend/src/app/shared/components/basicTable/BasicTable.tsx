@@ -8,6 +8,7 @@ import Paper from '@mui/material/Paper';
 
 import { useEffect, useState } from "react";
 import { api } from "../../../shared/services/api";
+import { get_profile_image } from '../../services/player_api';
 import { Player } from '../../models/player';
 
 export const BasicTable = () => {
@@ -20,6 +21,13 @@ export const BasicTable = () => {
                 setPlayers(response.data.data);
             })
     })
+
+    const render_profile_image = async (id: number) => {
+        get_profile_image(id).
+            then(resp => {
+                return <img src={resp} alt="" />
+            });
+    }
 
     return (
         <TableContainer component={Paper}>
@@ -44,6 +52,7 @@ export const BasicTable = () => {
                             <TableCell align="center">{player.email}</TableCell>
                             <TableCell align="center">{player.coins}</TableCell>
                             <TableCell align="center">{player.max_score}</TableCell>
+                            <TableCell align="center">{render_profile_image(player.id)}</TableCell>
                         </TableRow>
                     ))}
                 </TableBody>

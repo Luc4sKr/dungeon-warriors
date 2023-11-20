@@ -22,6 +22,17 @@ export async function register(player_register: PlayerRegister) {
         return response.data;
     }
     catch (error) {
-        console.error("Erro: " + error)
+        console.error("Erro: " + error);
+    }
+}
+
+export async function get_profile_image(id: number) {
+    try {
+        const response = await api.post(`/player/get_profile_image/${id}`)
+
+        return response.data;
+    }
+    catch (error) {
+        console.log(error);
     }
 }

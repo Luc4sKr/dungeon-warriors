@@ -111,7 +111,7 @@ def register():
     try:
         player = Player(username=username, email=email, password=password, profile_image=profile_image_url)
         db.session.add(player)
-        #db.session.commit()
+        db.session.commit()
         result = player_schema.dump(player)
         return jsonify({"message": "successfully registered", "data": result}), 201
     
@@ -130,3 +130,5 @@ def login():
         return jsonify({"message": "login successfully", "data": access_token})
 
     return jsonify({"message": "incorrect username or password"})
+
+
