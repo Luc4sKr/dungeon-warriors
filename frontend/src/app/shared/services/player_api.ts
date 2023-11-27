@@ -1,10 +1,6 @@
 import { api } from "./api";
 import { PlayerRegister } from "../models/player";
 
-export async function get_player_image(id: Number) {
-
-}
-
 export async function save_profile_image(profile_image: File) {
     try {
         const formData = new FormData();

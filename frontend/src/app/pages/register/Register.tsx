@@ -1,10 +1,11 @@
 import { useState, FormEvent, ChangeEvent, useEffect } from "react"
 import { Form, FormDiv, FormWrapper, SelectedImage } from "./Register.style";
-import { Button, TextField } from "@mui/material";
+import { Alert, Button, TextField } from "@mui/material";
 import { PlayerRegister } from "../../shared/models/player";
 import { register, save_profile_image } from "../../shared/services/player_api";
 
 export const Register = () => {
+    const [success, setSuccess] = useState(false);
     const [profileImage, setProfileImage] = useState<File>({} as File);
     const [formData, setFormData] = useState<PlayerRegister>({
         username: "",
@@ -33,7 +34,10 @@ export const Register = () => {
 
         await register(formData)
             .then(resp => {
-                console.log(resp)
+                setSuccess(true);
+            })
+            .catch(error => {
+                setSuccess(false);
             });
     }
 
@@ -56,86 +60,98 @@ export const Register = () => {
     };
 
     return (
-        <FormWrapper>
-            <Form onSubmit={onSubmitForm}>
-                <FormDiv>
-                    <h1 style={{ textAlign: "center" }}>Register</h1>
-                </FormDiv>
+        <>
+            <FormWrapper>
 
-                <FormDiv>
-                    <TextField
-                        type="text"
-                        label="Username"
-                        variant="standard"
-                        id="username"
-                        name="username"
-                        value={formData.username}
-                        onChange={handleInput}
-                    />
-                </FormDiv>
-
-                <FormDiv>
-                    <TextField
-                        type="email"
-                        label="Email"
-                        variant="standard"
-                        id="email"
-                        name="email"
-                        value={formData.email}
-                        onChange={handleInput}
-                    />
-                </FormDiv>
-
-                <FormDiv>
-                    <TextField
-                        type="password"
-                        label="Password"
-                        variant="standard"
-                        id="password"
-                        name="password"
-                        value={formData.password}
-                        onChange={handleInput}
-                    />
-                </FormDiv>
-
-                <FormDiv>
-                    <Button
-                        variant="contained"
-                        component="label"
+                {(success) && (
+                    <Alert
+                        severity="success"
+                        style={{marginBottom: 20}}
                     >
-                        Upload Profile Image
-                        <input
-                            type='file'
-                            id='profile_image'
-                            name='profile_image'
-                            onChange={handleImage}
-                            accept='image/*'
-                            key={Math.random()}
-                            hidden
+                        registration completed successfully
+                    </Alert>
+                )}
+
+                <Form onSubmit={onSubmitForm}>
+                    <FormDiv>
+                        <h1 style={{ textAlign: "center" }}>Register</h1>
+                    </FormDiv>
+
+                    <FormDiv>
+                        <TextField
+                            type="text"
+                            label="Username"
+                            variant="standard"
+                            id="username"
+                            name="username"
+                            value={formData.username}
+                            onChange={handleInput}
                         />
-                    </Button>
+                    </FormDiv>
 
-                    {profileImage.size != undefined && (
-                        <SelectedImage>
-                            <p style={{ color: "rgba(0, 0, 0, 0.6)" }}>Selected Image:</p>
-                            <img
-                                src={URL.createObjectURL(profileImage)}
-                                alt="Selected"
-                                style={{ width: "100%" }}
+                    <FormDiv>
+                        <TextField
+                            type="email"
+                            label="Email"
+                            variant="standard"
+                            id="email"
+                            name="email"
+                            value={formData.email}
+                            onChange={handleInput}
+                        />
+                    </FormDiv>
+
+                    <FormDiv>
+                        <TextField
+                            type="password"
+                            label="Password"
+                            variant="standard"
+                            id="password"
+                            name="password"
+                            value={formData.password}
+                            onChange={handleInput}
+                        />
+                    </FormDiv>
+
+                    <FormDiv>
+                        <Button
+                            variant="contained"
+                            component="label"
+                        >
+                            Upload Profile Image
+                            <input
+                                type='file'
+                                id='profile_image'
+                                name='profile_image'
+                                onChange={handleImage}
+                                accept='image/*'
+                                key={Math.random()}
+                                hidden
                             />
-                        </SelectedImage>
-                    )}
-                </FormDiv>
+                        </Button>
 
-                <FormDiv>
-                    <Button
-                        type="submit"
-                        variant="contained"
-                    >
-                        Send
-                    </Button>
-                </FormDiv>
-            </Form>
-        </FormWrapper>
+                        {profileImage.size != undefined && (
+                            <SelectedImage>
+                                <p style={{ color: "rgba(0, 0, 0, 0.6)" }}>Selected Image:</p>
+                                <img
+                                    src={URL.createObjectURL(profileImage)}
+                                    alt="Selected"
+                                    style={{ width: "100%" }}
+                                />
+                            </SelectedImage>
+                        )}
+                    </FormDiv>
+
+                    <FormDiv>
+                        <Button
+                            type="submit"
+                            variant="contained"
+                        >
+                            Send
+                        </Button>
+                    </FormDiv>
+                </Form>
+            </FormWrapper>
+        </>
     )
 }
