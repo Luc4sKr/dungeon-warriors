@@ -2,7 +2,7 @@ import { api } from "./api";
 import { PlayerRegister } from "../models/player";
 
 export async function get_player_image(id: Number) {
-    
+
 }
 
 export async function save_profile_image(profile_image: File) {
@@ -26,6 +26,17 @@ export async function register(player_register: PlayerRegister) {
         return response.data;
     }
     catch (error) {
-        console.error("Erro: " + error)
+        console.error("Erro: " + error);
+    }
+}
+
+export async function get_profile_image(id: number) {
+    try {
+        const response = await api.get(`/player/get_profile_image/${id}`)
+
+        return response.data;
+    }
+    catch (error) {
+        console.log(error);
     }
 }

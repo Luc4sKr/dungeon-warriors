@@ -3,7 +3,8 @@ export type Player = {
     username: string,
     email: string,
     coins: number,
-    max_score: number
+    max_score: number,
+    profile_image: string
 }
 
 export type GetPlayerResponse = {

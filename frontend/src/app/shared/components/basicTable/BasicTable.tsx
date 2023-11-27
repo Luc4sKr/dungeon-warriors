@@ -19,8 +19,9 @@ export const BasicTable = () => {
         api.get("/players")
             .then((response) => {
                 setPlayers(response.data.data);
-            })
-    })
+            });
+
+    }, []);
 
     return (
         <TableContainer component={Paper}>
@@ -46,9 +47,11 @@ export const BasicTable = () => {
                             <TableCell align="center">{player.email}</TableCell>
                             <TableCell align="center">{player.coins}</TableCell>
                             <TableCell align="center">{player.max_score}</TableCell>
+
                             <TableCell align="center">
-                                
+                                <Avatar alt="Remy Sharp" src={`http://localhost:5000/player/get_profile_image/${player.id}`} />
                             </TableCell>
+
                         </TableRow>
                     ))}
                 </TableBody>
