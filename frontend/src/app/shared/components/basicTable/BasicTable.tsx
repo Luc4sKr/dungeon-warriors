@@ -9,6 +9,7 @@ import Paper from '@mui/material/Paper';
 import { useEffect, useState } from "react";
 import { api } from "../../../shared/services/api";
 import { Player } from '../../models/player';
+import { Avatar } from '@mui/material';
 
 export const BasicTable = () => {
     const defaultPlayer: Player[] = []
@@ -31,6 +32,7 @@ export const BasicTable = () => {
                         <TableCell align="center">Email</TableCell>
                         <TableCell align="center">Coins(g)</TableCell>
                         <TableCell align="center">Max Score</TableCell>
+                        <TableCell align="center">Image</TableCell>
                     </TableRow>
                 </TableHead>
                 <TableBody>
@@ -44,6 +46,9 @@ export const BasicTable = () => {
                             <TableCell align="center">{player.email}</TableCell>
                             <TableCell align="center">{player.coins}</TableCell>
                             <TableCell align="center">{player.max_score}</TableCell>
+                            <TableCell align="center">
+                                
+                            </TableCell>
                         </TableRow>
                     ))}
                 </TableBody>

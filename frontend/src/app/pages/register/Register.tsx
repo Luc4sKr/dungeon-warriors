@@ -23,8 +23,6 @@ export const Register = () => {
         const resp = await save_profile_image(profileImage);
 
         if (resp) {
-            console.log(resp)
-
             setFormData({
                 ...formData,
                 profile_image_url: resp.data
@@ -32,9 +30,6 @@ export const Register = () => {
 
             formData.profile_image_url = resp.data
         }
-
-        console.log("antes register")
-        console.log(formData)
 
         await register(formData)
             .then(resp => {
