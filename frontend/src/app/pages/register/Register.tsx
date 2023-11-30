@@ -1,6 +1,6 @@
 import { useState, FormEvent, ChangeEvent, useEffect } from "react"
 import { Form, FormDiv, FormWrapper, SelectedImage } from "./Register.style";
-import { Alert, Button, TextField } from "@mui/material";
+import { Alert, Box, Button, TextField } from "@mui/material";
 import { PlayerRegister } from "../../shared/models/player";
 import { register, save_profile_image } from "../../shared/services/player_api";
 
@@ -66,7 +66,7 @@ export const Register = () => {
                 {(success) && (
                     <Alert
                         severity="success"
-                        style={{marginBottom: 20}}
+                        style={{ marginBottom: 20 }}
                     >
                         registration completed successfully
                     </Alert>
@@ -133,10 +133,15 @@ export const Register = () => {
                         {profileImage.size != undefined && (
                             <SelectedImage>
                                 <p style={{ color: "rgba(0, 0, 0, 0.6)" }}>Selected Image:</p>
-                                <img
+
+                                <Box
+                                    component="img"
+                                    style={{
+                                        height: 250,
+                                        width: "auto"
+                                    }}
+                                    alt="Selected image"
                                     src={URL.createObjectURL(profileImage)}
-                                    alt="Selected"
-                                    style={{ width: "100%" }}
                                 />
                             </SelectedImage>
                         )}

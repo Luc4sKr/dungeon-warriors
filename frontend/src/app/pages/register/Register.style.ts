@@ -39,4 +39,7 @@ export const FormLabel = styled.label`
 export const SelectedImage = styled.div`
 	width: 80%;
 	margin: 10px auto;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
 `;
