@@ -2,9 +2,19 @@
 
 O projeto dungeon-warriors é dividido em 3 outros projetos:
 
+- [Requisitos AV6](#requisitos-av6)
 - [Backend](#backend)
 - [Frontend](#frontend)
 - [Game](#game)
+
+## Requisitos AV6
+
+Para atender aos requisitos da avaliação AV6, o projeto contemplou:
+
+- Organização do repositório por pastas, cada uma indicando um projeto específico.
+- Continuação do projeto original e criação de um "remake" do jogo utilizando a game engine Godot (disponível em dungeon-warriors-II).
+- Implementação de upload de imagens no sistema, permitindo a listagem das mesmas.
+- Utilização das seguintes tecnologias para estilização do frontend: [MUI](https://mui.com/material-ui/getting-started/) e [styled components](https://styled-components.com/)
 
 ## Backend
 
@@ -42,11 +52,3 @@ Para rodar o jogo primeiro é necessário estar rodando o backend pois o jogo ne
 cd game && python main.py
 ```
 
-## Requisitos AV6
-
-Para atender aos requisitos da avaliação AV6, o projeto contemplou:
-
-- Organização do repositório por pastas, cada uma indicando um projeto específico.
-- Continuação do projeto original e criação de um "remake" do jogo utilizando a game engine Godot (disponível em dungeon-warriors-II).
-- Implementação de upload de imagens no sistema, permitindo a listagem das mesmas.
-- Utilização das seguintes tecnologias para estilização do frontend: [MUI](https://mui.com/material-ui/getting-started/) e [styled components](https://styled-components.com/)
