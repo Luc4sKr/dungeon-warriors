@@ -1,14 +1,18 @@
+import { HomeContainer } from "./Home.style"
 import { Button } from "../../shared/components/button/Button"
 
-import "./Home.css"
-
 export const Home = () => {
+
+    const playNow = (e: any) => {
+        e.preventDefault();
+        window.open("https://github.com/Luc4sKr/dungeon-warriors");
+    }
+
+
     return (
-        <div>
-            <div className="home-container">
-                <p>Click the button and play right now</p>
-                <Button>Play now</Button>
-            </div>
-        </div>
+        <HomeContainer>
+            <p>Click the button and play right now</p>
+            <Button onClick={playNow}>Play now</Button>
+        </HomeContainer>
     )
 }

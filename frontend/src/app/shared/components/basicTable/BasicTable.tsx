@@ -31,7 +31,7 @@ export const BasicTable = () => {
                         <TableCell align="center">Id</TableCell>
                         <TableCell align="center">Username</TableCell>
                         <TableCell align="center">Email</TableCell>
-                        <TableCell align="center">Coins(g)</TableCell>
+                        <TableCell align="center">Coins</TableCell>
                         <TableCell align="center">Max Score</TableCell>
                         <TableCell align="center">Image</TableCell>
                     </TableRow>
@@ -48,8 +48,15 @@ export const BasicTable = () => {
                             <TableCell align="center">{player.coins}</TableCell>
                             <TableCell align="center">{player.max_score}</TableCell>
 
-                            <TableCell align="center">
-                                <Avatar alt="Remy Sharp" src={`http://localhost:5000/player/get_profile_image/${player.id}`} />
+                            <TableCell
+                                align="center"
+                                style={{
+                                    display: "flex",
+                                    alignItems: "center",
+                                    justifyContent: "center"
+                                }}
+                            >
+                                <Avatar alt="" src={`http://localhost:5000/player/get_profile_image/${player.id}`} />
                             </TableCell>
 
                         </TableRow>

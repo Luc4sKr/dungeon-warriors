@@ -99,14 +99,10 @@ def get_profile_image(player_id):
 def register():
     data = request.get_json()
 
-    print(data)
-
     username = data["username"]
     email = data["email"]
     password = generate_password_hash(data["password"])
     profile_image_url = data["profile_image_url"]
-
-    print(profile_image_url)
 
     try:
         player = Player(username=username, email=email, password=password, profile_image=profile_image_url)
