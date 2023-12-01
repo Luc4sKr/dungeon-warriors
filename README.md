@@ -1,7 +1,5 @@
 # dungeon-warriors
 
-O projeto dungeon-warriors é dividido em 3 outros projetos:
-
 - [Requisitos AV6](#requisitos-av6)
 - [Backend](#backend)
 - [Frontend](#frontend)
